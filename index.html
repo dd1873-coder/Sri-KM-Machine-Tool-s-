@@ -1,1090 +1,406 @@
-{% extends "base_public.html" %}
-
-{% block content %}
-<div class="container">
-    <!-- Hero Section with Animation -->
-    <div class="about-header">
-        <div class="hero-content">
-            <h1 class="animate-fade-in">About Sri KM Machine Tools</h1>
-            <p class="lead animate-slide-up">Your Trusted Partner in Precision Engineering Solutions</p>
-            <div class="hero-buttons animate-slide-up">
-                <a href="#contact" class="btn-primary">Contact Us</a>
-                <a href="#location" class="btn-outline">Visit Us</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="about-content">
-        <!-- Company Introduction -->
-        <section class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-building"></i>
-                <h2>Who We Are</h2>
-            </div>
-            <div class="section-content">
-                <p>
-                    Sri KM Machine Tools is a leading provider of high-quality machine tools and precision engineering solutions. 
-                    With years of experience in the industry, we have established ourselves as a trusted partner for businesses 
-                    seeking reliable and efficient manufacturing equipment.
-                </p>
-                <p>
-                    Our commitment to excellence, customer satisfaction, and technological innovation has made us the preferred 
-                    choice for industries across the region. We pride ourselves on delivering solutions that enhance productivity 
-                    and drive growth for our clients.
-                </p>
-            </div>
-        </section>
-
-        <!-- Our Mission & Vision -->
-        <section class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-bullseye"></i>
-                <h2>Our Mission & Vision</h2>
-            </div>
-            <div class="section-content">
-                <div class="mission-vision-grid">
-                    <div class="mission-card">
-                        <h3><i class="fas fa-flag"></i> Our Mission</h3>
-                        <p>
-                            To provide cutting-edge machine tools and engineering solutions that empower businesses 
-                            to achieve superior manufacturing capabilities, enhance operational efficiency, and drive 
-                            sustainable growth in their respective industries.
-                        </p>
-                    </div>
-                    <div class="vision-card">
-                        <h3><i class="fas fa-eye"></i> Our Vision</h3>
-                        <p>
-                            To be the most trusted and innovative partner in the machine tools industry, recognized 
-                            for our technical expertise, reliable solutions, and unwavering commitment to customer success.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Company Stats Section -->
-        <!--<section class="stats-section reveal">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" data-target="15">0</div>
-                    <div class="stat-label">Years of Excellence</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="500">0</div>
-                    <div class="stat-label">Happy Clients</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="1000">0</div>
-                    <div class="stat-label">Projects Completed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">Machine Types</div>
-                </div>
-            </div>
-        </section>-->
-
-        <!-- Company Location -->
-        <section id="location" class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-map-marker-alt"></i>
-                <h2>Our Location</h2>
-            </div>
-            <div class="section-content">
-                <div class="location-info">
-                    <div class="address-card">
-                        <h3><i class="fas fa-map-pin"></i> Registered Office</h3>
-                        <div class="address-details">
-                            <p><strong>Sri KM Machine Tools</strong></p>
-                            <p>No. 4, Gandhi Rd,</p>
-                            <p>Kolapakkam, Vandaloor,</p>
-                            <p>Chennai - 600127,</p>
-                            <p>Tamil Nadu, India</p>
-                        </div>
-                        
-                        <div class="business-hours-info">
-                            <h4><i class="fas fa-clock"></i> Business Hours</h4>
-                            <p>Monday - Saturday: 9:00 AM - 6:00 PM</p>
-                            <p>Sunday: Closed</p>
-                        </div>
-
-                        <div class="maps-links">
-                            <a href="https://maps.app.goo.gl/Zu1x7tZ53GzLzYrA9" 
-                               target="_blank" 
-                               class="maps-button google-maps">
-                                <i class="fab fa-google"></i>
-                                View on Google Maps
-                            </a>
-                            <a href="https://www.google.com/maps/dir/?api=1&destination=12.87146,80.10660" 
-                               target="_blank" 
-                               class="maps-button directions">
-                                <i class="fas fa-directions"></i>
-                                Get Directions
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="map-container">
-                        <div class="map-overlay">
-                            <div class="business-badge">
-                                <i class="fas fa-store"></i>
-                                <span>Open for Business</span>
-                            </div>
-                        </div>
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.21583587357!2d77.5090259758788!3d13.028612087298092!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f8a3d04b31d%3A0xbbcf5c5a3c239e3e!2sPeenya%20Industrial%20Area%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
-                            width="100%" 
-                            height="300" 
-                            style="border:0; border-radius: 8px;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                        <p class="map-note">
-                            <i class="fas fa-info-circle"></i>
-                            Interactive map - Use controls to zoom and navigate
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Information -->
-        <section id="contact" class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-address-book"></i>
-                <h2>Contact Information</h2>
-            </div>
-            <div class="section-content">
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Phone Numbers</h3>
-                            <p class="contact-item">
-                                <strong>Mr. Saravanan (Managing Director):</strong><br>
-                                <a href="tel:+918754046875">+91 8754046875</a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email Addresses</h3>
-                            <p class="contact-item">
-                                <strong>General Inquiries:</strong><br>
-                                <a href="mailto:srikmmachinetools@gmail.com">srikmmachinetools@gmail.com</a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Business Hours</h3>
-                            <p class="contact-item">
-                                <strong>Monday - Saturday:</strong><br>
-                                9:00 AM - 6:00 PM
-                            </p>
-                            <p class="contact-item">
-                                <strong>Sunday:</strong><br>
-                                Closed
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Key Personnel</h3>
-                            <p class="contact-item">
-                                <strong>Mr. Saravanan M.</strong><br>
-                                Managing Director<br>
-                                <a href="tel:+918754046875">+91 8754046875</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Leadership Team Section -->
-        <section class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-users"></i>
-                <h2>Leadership Team</h2>
-            </div>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user-circle fa-4x"></i>
-                    </div>
-                    <h3>Mr. Saravanan M.</h3>
-                    <p class="team-title">Managing Director</p>
-                    <!-- <p class="team-desc">20+ years of experience in machine tools industry, leading the company with vision and expertise.</p> -->
-                    <div class="team-social">
-                        <a href="tel:+918754046875"><i class="fas fa-phone"></i></a>
-                        <a href="mailto:srikmmachinetools@gmail.com"><i class="fas fa-envelope"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-comments"></i>
-                <h2>What Our Clients Say</h2>
-            </div>
-            <div class="testimonials-slider">
-                <div class="testimonial-card active">
-                    <i class="fas fa-quote-left"></i>
-                    <p>"Excellent quality products and outstanding customer service. Sri KM Machine Tools has been our reliable partner for years. Their technical support is exceptional!"</p>
-                    <div class="client-info">
-                        <!-- <strong>Rajesh Kumar</strong>
-                        <span>ABC Manufacturing Pvt Ltd</span> -->
-                        <div class="rating">★★★★★</div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <i class="fas fa-quote-left"></i>
-                    <p>"The precision and quality of their machine tools are unmatched."</p>
-                    <div class="client-info">
-                        <!-- <strong>Priya Sharma</strong> -->
-                        <span>Precision Engineers</span>
-                        <div class="rating">★★★★★</div>
-                    </div>
-                </div>
-                <!--<div class="testimonial-card">
-                    <i class="fas fa-quote-left"></i>
-                    <p>"Professional team, timely delivery, and excellent after-sales support. Highly recommended for all your machine tool requirements!"</p>
-                    <div class="client-info">
-                        <strong>Suresh Reddy</strong>
-                        <span>Industrial Solutions</span>
-                        <div class="rating">★★★★★</div>
-                    </div>
-                </div>-->
-                <button class="testimonial-nav prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="testimonial-nav next"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="testimonial-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </section>
-
-        <!-- Why Choose Us -->
-        <section class="about-section reveal">
-            <div class="section-header">
-                <i class="fas fa-star"></i>
-                <h2>Why Choose Sri KM Machine Tools?</h2>
-            </div>
-            <div class="section-content">
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <i class="fas fa-cogs"></i>
-                        <h3>Technical Expertise</h3>
-                        <p>Highly skilled team with deep knowledge of machine tools and manufacturing processes</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Quality Assurance</h3>
-                        <p>Rigorous quality checks ensuring reliable and durable equipment</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-headset"></i>
-                        <h3>Customer Support</h3>
-                        <p>24/7 technical support and service</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-bolt"></i>
-                        <h3>Innovation</h3>
-                        <p>Continuous adoption of latest technologies and industry best practices</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter Section -->
-        <section class="newsletter-section reveal">
-            <div class="newsletter-content">
-                <i class="fas fa-envelope-open-text"></i>
-                <h3>Subscribe to Our Newsletter</h3>
-                <p>Get latest updates about new products and special offers</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <div class="form-group">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </div>
-</div>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/918754046875" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-    <span class="whatsapp-text">Chat with us</span>
-</a>
-
-<!-- Page Loader -->
-<div class="page-loader">
-    <div class="loader"></div>
-</div>
-
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ACE Material List Web App</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 <style>
-:root {
-    --primary-color: #2563eb;
-    --secondary-color: #7c3aed;
-    --accent-color: #f59e0b;
-    --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    --dark: #1e293b;
-    --light: #f8fafc;
-}
-
-/* Page Loader */
-.page-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.5s ease;
-}
-
-.loader {
-    width: 50px;
-    height: 50px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Hero Section */
-.about-header {
-    position: relative;
-    text-align: center;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    margin-bottom: 2rem;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.about-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x bottom;
-    opacity: 0.3;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.about-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.hero-buttons {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.btn-primary, .btn-outline {
-    padding: 0.75rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.btn-primary {
-    background: white;
-    color: #667eea;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.btn-outline {
-    border: 2px solid white;
-    color: white;
-}
-
-.btn-outline:hover {
-    background: white;
-    color: #667eea;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.8s ease;
-}
-
-.animate-slide-up {
-    animation: fadeIn 0.8s ease 0.3s both;
-}
-
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Stats Section */
-.stats-section {
-    padding: 3rem;
-    background: var(--gradient);
-    border-radius: 10px;
-    margin-bottom: 2rem;
-    color: white;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-/* About Sections */
-.about-section {
-    margin-bottom: 3rem;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #667eea;
-}
-
-.section-header i {
-    font-size: 1.5rem;
-    color: #667eea;
-    margin-right: 1rem;
-}
-
-/* Mission Vision */
-.mission-vision-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.mission-card, .vision-card {
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #667eea;
-    transition: transform 0.3s ease;
-}
-
-.mission-card:hover, .vision-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Location */
-.location-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.address-card {
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-}
-
-.business-hours-info {
-    margin: 1.5rem 0;
-    padding: 1rem;
-    background: white;
-    border-radius: 8px;
-}
-
-.maps-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.maps-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.google-maps {
-    background: #4285f4;
-    color: white;
-}
-
-.directions {
-    background: #34a853;
-    color: white;
-}
-
-.maps-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-
-.map-container {
-    position: relative;
-}
-
-.map-overlay {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 1;
-}
-
-.business-badge {
-    background: rgba(255,255,255,0.95);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #10b981;
-}
-
-/* Contact Section */
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.contact-card {
-    display: flex;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #667eea;
-    transition: all 0.3s ease;
-}
-
-.contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-/* Team Section */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.team-card {
-    text-align: center;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-.team-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.team-image {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 1rem;
-    background: var(--gradient);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.team-title {
-    color: #667eea;
-    font-weight: 500;
-    margin: 0.5rem 0;
-}
-
-.team-social {
-    margin-top: 1rem;
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.team-social a {
-    color: #667eea;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-}
-
-.team-social a:hover {
-    color: #764ba2;
-}
-
-/* Testimonials */
-.testimonials-slider {
-    position: relative;
-    overflow: hidden;
-    padding: 2rem;
-}
-
-.testimonial-card {
-    display: none;
-    text-align: center;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 10px;
-    animation: fadeIn 0.5s ease;
-}
-
-.testimonial-card.active {
-    display: block;
-}
-
-.testimonial-card i.fa-quote-left {
-    font-size: 2rem;
-    color: #667eea;
-    margin-bottom: 1rem;
-}
-
-.testimonial-card p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.client-info {
-    margin-top: 1rem;
-}
-
-.client-info strong {
-    display: block;
-    color: #333;
-}
-
-.client-info span {
-    display: block;
-    color: #666;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.rating {
-    color: #fbbf24;
-    font-size: 1.1rem;
-}
-
-.testimonial-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.testimonial-nav:hover {
-    background: #667eea;
-    color: white;
-}
-
-.testimonial-nav.prev {
-    left: 10px;
-}
-
-.testimonial-nav.next {
-    right: 10px;
-}
-
-.testimonial-dots {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #ccc;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.dot.active {
-    background: #667eea;
-    width: 30px;
-    border-radius: 5px;
-}
-
-/* Features Grid */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.feature-item {
-    text-align: center;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.feature-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.feature-item i {
-    font-size: 2.5rem;
-    color: #667eea;
-    margin-bottom: 1rem;
-}
-
-/* Newsletter Section */
-.newsletter-section {
-    background: var(--gradient);
-    border-radius: 10px;
-    padding: 3rem;
-    text-align: center;
-    color: white;
-}
-
-.newsletter-content i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.newsletter-form {
-    max-width: 500px;
-    margin: 2rem auto 0;
-}
-
-.form-group {
-    display: flex;
-    gap: 1rem;
-}
-
-.newsletter-form input {
-    flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.newsletter-form button {
-    padding: 0.75rem 1.5rem;
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.newsletter-form button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-/* WhatsApp Float Button */
-.whatsapp-float {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25d366;
-    color: white;
-    border-radius: 50px;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    z-index: 1000;
-    transition: all 0.3s ease;
-}
-
-.whatsapp-float:hover {
-    transform: scale(1.05);
-    background: #128C7E;
-    color: white;
-}
-
-.whatsapp-float i {
-    font-size: 1.5rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .mission-vision-grid,
-    .location-info,
-    .contact-grid,
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .about-header h1 {
-        font-size: 2rem;
-    }
-    
-    .about-section {
-        padding: 1rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn-primary, .btn-outline {
-        width: 200px;
-    }
-    
-    .form-group {
-        flex-direction: column;
-    }
-    
-    .whatsapp-float span {
-        display: none;
-    }
-    
-    .whatsapp-float {
-        padding: 12px;
-        border-radius: 50%;
-    }
-    
-    .whatsapp-float i {
-        margin: 0;
-    }
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#111827;
+}
+.app{
+    max-width:1100px;
+    margin:20px auto;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 12px 35px rgba(0,0,0,.12);
+    overflow:hidden;
+}
+.topbar{
+    background:linear-gradient(135deg,#0f172a,#1e40af);
+    color:#fff;
+    padding:18px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+.topbar h1{margin:0;font-size:22px;letter-spacing:.4px}
+.topbar p{margin:4px 0 0;font-size:13px;color:#cbd5e1}
+.badge{
+    background:#22c55e;
+    color:#fff;
+    padding:8px 12px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:bold;
+}
+.form-area{padding:20px}
+.customer-grid{
+    display:grid;
+    grid-template-columns:130px 1fr 130px 1fr;
+    border:2px solid #111827;
+    max-width:720px;
+    margin-bottom:22px;
+}
+.customer-grid label,.customer-grid input{
+    border:1px solid #111827;
+    padding:9px;
+    font-size:14px;
+}
+.customer-grid label{
+    font-weight:bold;
+    background:#f8fafc;
+}
+.customer-grid input{
+    border-radius:0;
+    outline:none;
+}
+.table-wrap{
+    overflow-x:auto;
+    border:2px solid #111827;
+    border-radius:8px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:750px;
+}
+th,td{
+    border:1px solid #111827;
+    padding:8px;
+    text-align:center;
+    font-size:14px;
+}
+th{
+    background:#f1f5f9;
+    font-weight:bold;
+}
+select{
+    width:100%;
+    padding:8px;
+    border:1px solid #94a3b8;
+    border-radius:6px;
+    font-size:14px;
+    background:#fff;
+}
+select:focus,input:focus{
+    outline:2px solid #2563eb;
+    border-color:#2563eb;
+}
+.btn-row{
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+    flex-wrap:wrap;
+}
+button{
+    border:none;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#fff;
+}
+.add-btn{background:#2563eb}
+.download-btn{background:#16a34a}
+.clear-btn{background:#dc2626}
+.delete-btn{
+    background:#ef4444;
+    padding:7px 10px;
+}
+.note{
+    margin-top:12px;
+    font-size:13px;
+    color:#475569;
+}
+.pdf-mode .btn-row,
+.pdf-mode .note,
+.pdf-mode .delete-col{
+    display:none !important;
+}
+.pdf-mode .app{
+    box-shadow:none;
+    margin:0;
+    border-radius:0;
+}
+.pdf-mode select,
+.pdf-mode input{
+    border:none;
+    outline:none;
+    appearance:none;
+    font-weight:500;
+}
+@media(max-width:700px){
+    .app{margin:0;border-radius:0;min-height:100vh}
+    .customer-grid{grid-template-columns:120px 1fr;max-width:100%}
+    .topbar h1{font-size:18px}
 }
 </style>
+</head>
+<body>
+<datalist id="materialSuggestions"></datalist>
+<div class="app">
+    <div class="topbar">
+        <div class="badge">Sri KM Machine Tools</div>
+    </div>
+
+    <div class="form-area">
+        <div class="customer-grid">
+            <label>CUSTOMER</label>
+            <input type="text" id="customer" />
+            <label>DATE</label>
+            <input type="date" id="date" />
+
+            <label>MC TYPE</label>
+            <input type="text" id="mcType" />
+            <label>MC NO</label>
+            <input type="text" id="mcNo" />
+        </div>
+
+        <div class="table-wrap">
+            <table id="materialTable">
+                <thead>
+                    <tr>
+                        <th style="width:80px">SL NO</th>
+                        <th>MATERIAL NAME / TYPE NEW</th>
+                        <th style="width:180px">QTY</th>
+                        <th class="delete-col" style="width:90px">DELETE</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div class="btn-row">
+            <button class="add-btn" onclick="addRow()"><i class="fa fa-plus"></i> Add Row</button>
+            <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Download PDF</button>
+            <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-// Page loader
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        document.querySelector('.page-loader').style.opacity = '0';
-        setTimeout(function() {
-            document.querySelector('.page-loader').style.display = 'none';
-        }, 500);
-    }, 500);
-});
+const materialList = [
+    "PM KIT STD",
+    "PM KIT STD 1",
+    "PM Kit for LM",
+    "PM Kit for LM 1",
+    "BOOT",
+    "Green Push Butten with LED",
+    "NEW TYPE POPPET",
+    "OLD Type Puppet",
+    "KNOB",
+    "0.25 cc CATRIDGE",
+    "RLF SMALL",
+    "RLF Big",
+    "FEETING TYPE 0-70 PRESSURE GAUGE",
+    "0-10 MPA Gauge",
+    "0-28 PRESSURE GAUGE",
+    "Y STAINER",
+    "TAC 25-62 BEARING",
+    "ISO FULX GREES",
+    "6 INCH READTER COOLING FAN",
+    "270 L ENCODER BELT",
+    "300 L ENCODER BELT",
+    "450 L ENCODER BELT",
+    "XPA1450 Spindle Belt",
+    "XPA1650 Spindle Belt",
+    "XPA1800 Spindle Belt",
+    "XPA1850 Spindle Belt",
+    "XPA1900 Spindle Belt",
+    "XPA1950 Spindle Belt",
+    "SPA1850 Spindle Belt",
+    "SPA1900 Spindle Belt",
+    "SPA1950 Spindle Belt",
+    "P110 Chucking Cylinder Seal Kit",
+    "P110 V-Seal",
+    "BTP-80 Seal kit",
+    "Gear oil (EP 140)",
+    "Oil level indicator",
+    "Turret Clamp Proximity",
+    "BTP-80 Drum cam roller with pin",
+    "BTP-80 Track roller with pin",
+    "BTP-80 Thrust bearing (51111)",
+    "BTP-80 Disc spring",
+    "Support bearing (6202)",
+    "BTP-80 anti rotation key", 
+    "BTP-80 cam gear with ring",
+    "BTP-80 cam shaft",
+    "BTP-80 follower shaft",
+    "BTP-80 drive shaft",
+    "BTP-80 drive shaft Lock net", 
+    "BTP-80 Indexing gear Assembly",
+    "Pragathi 8 Station Encoder",
+    "Pragathi 12 Station Encoder"
 
-// Scroll reveal animation
-function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.bottom >= 0
-    );
+];
+
+const qtyList = Array.from({length:100},(_,i)=>i+1);
+const tableBody = document.getElementById("tableBody");
+const storageKey = "ace_material_list_saved_data";
+
+function materialOptions(){
+    return materialList.map(item => `<option value="${item}">${item}</option>`).join('');
 }
 
-function handleScrollReveal() {
-    const revealElements = document.querySelectorAll('.reveal');
-    revealElements.forEach(el => {
-        if (isElementInViewport(el)) {
-            el.classList.add('active');
+function qtyOptions(){
+    return '<option value="">Select Qty</option>' + qtyList.map(qty => `<option value="${qty}">${qty}</option>`).join('');
+}
+
+function addRow(selectedMaterial = "", selectedQty = ""){
+    const rowCount = tableBody.rows.length + 1;
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td class="slno">${rowCount}</td>
+        <td>
+            <input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" onchange="saveData()" oninput="saveData()">
+        </td>
+        <td><select onchange="saveData()">${qtyOptions()}</select></td>
+        <td class="delete-col"><button class="delete-btn" onclick="deleteRow(this)"><i class="fa fa-xmark"></i></button></td>
+    `;
+    tableBody.appendChild(row);
+
+    row.cells[1].querySelector("input").value = selectedMaterial;
+    row.cells[2].querySelector("select").value = selectedQty;
+
+    saveData();
+}
+
+function deleteRow(btn){
+    btn.closest("tr").remove();
+    updateSlNo();
+    saveData();
+}
+
+function updateSlNo(){
+    [...tableBody.rows].forEach((row,index)=>{
+        row.querySelector(".slno").textContent = index + 1;
+    });
+}
+
+function saveData(){
+    const rows = [...tableBody.rows].map(row => ({
+        material: row.cells[1].querySelector("input").value,
+        qty: row.cells[2].querySelector("select").value
+    }));
+
+    const data = {
+        customer: document.getElementById("customer").value,
+        date: document.getElementById("date").value,
+        mcType: document.getElementById("mcType").value,
+        mcNo: document.getElementById("mcNo").value,
+        rows: rows
+    };
+
+    localStorage.setItem(storageKey, JSON.stringify(data));
+}
+
+function loadData(){
+    const saved = localStorage.getItem(storageKey);
+    if(!saved) return false;
+
+    try{
+        const data = JSON.parse(saved);
+        document.getElementById("customer").value = data.customer || "";
+        document.getElementById("date").value = data.date || "";
+        document.getElementById("mcType").value = data.mcType || "";
+        document.getElementById("mcNo").value = data.mcNo || "";
+
+        tableBody.innerHTML = "";
+        if(data.rows && data.rows.length){
+            data.rows.forEach(item => addRow(item.material || '', item.qty || ''));
+        }else{
+            addRow();
         }
-    });
-}
-
-window.addEventListener('scroll', handleScrollReveal);
-window.addEventListener('load', handleScrollReveal);
-
-// Stats counter animation
-function animateStats() {
-    const stats = document.querySelectorAll('.stat-number');
-    stats.forEach(stat => {
-        const target = parseInt(stat.getAttribute('data-target'));
-        let current = 0;
-        const increment = target / 50;
-        const updateCounter = () => {
-            if(current < target) {
-                current += increment;
-                stat.innerText = Math.ceil(current);
-                setTimeout(updateCounter, 20);
-            } else {
-                stat.innerText = target;
-            }
-        };
-        updateCounter();
-    });
-}
-
-// Trigger stats animation when stats section comes into view
-const statsSection = document.querySelector('.stats-section');
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting) {
-            animateStats();
-            statsObserver.unobserve(entry.target);
-        }
-    });
-});
-
-if(statsSection) statsObserver.observe(statsSection);
-
-// Testimonials slider
-let currentTestimonial = 0;
-const testimonials = document.querySelectorAll('.testimonial-card');
-const dots = document.querySelectorAll('.dot');
-
-function showTestimonial(index) {
-    testimonials.forEach((testimonial, i) => {
-        testimonial.classList.remove('active');
-        if(dots[i]) dots[i].classList.remove('active');
-    });
-    
-    testimonials[index].classList.add('active');
-    if(dots[index]) dots[index].classList.add('active');
-}
-
-function nextTestimonial() {
-    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-    showTestimonial(currentTestimonial);
-}
-
-function prevTestimonial() {
-    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-    showTestimonial(currentTestimonial);
-}
-
-// Add event listeners for testimonial navigation
-const prevBtn = document.querySelector('.testimonial-nav.prev');
-const nextBtn = document.querySelector('.testimonial-nav.next');
-
-if(prevBtn) prevBtn.addEventListener('click', prevTestimonial);
-if(nextBtn) nextBtn.addEventListener('click', nextTestimonial);
-
-// Add dot click handlers
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        currentTestimonial = index;
-        showTestimonial(currentTestimonial);
-    });
-});
-
-// Auto-rotate testimonials
-setInterval(() => {
-    if(testimonials.length > 0) {
-        nextTestimonial();
+        return true;
+    }catch(error){
+        localStorage.removeItem(storageKey);
+        return false;
     }
-}, 5000);
-
-// Newsletter form submission
-const newsletterForm = document.getElementById('newsletterForm');
-if(newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = this.querySelector('input[type="email"]').value;
-        alert(`Thank you for subscribing with ${email}! You'll receive our latest updates.`);
-        this.reset();
-    });
 }
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if(target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+function clearRows(){
+    if(confirm("Clear all material rows and saved data?")){
+        localStorage.removeItem(storageKey);
+        tableBody.innerHTML = "";
+        document.getElementById("customer").value = "";
+        document.getElementById("mcType").value = "";
+        document.getElementById("mcNo").value = "";
+        document.getElementById("date").valueAsDate = new Date();
+        addRow();
+    }
+}
+
+function safeName(text, fallback){
+    return (text.trim() || fallback)
+        .replace(/[^a-zA-Z0-9_-]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_|_$/g, "");
+}
+
+async function downloadPDF(){
+    saveData();
+    document.body.classList.add("pdf-mode");
+
+    const { jsPDF } = window.jspdf;
+    const element = document.querySelector(".app");
+
+    const canvas = await html2canvas(element, {
+        scale: 2,
+        backgroundColor: "#ffffff"
     });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    let heightLeft = pdfHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+    heightLeft -= pdf.internal.pageSize.getHeight();
+
+    while(heightLeft > 0){
+        position = heightLeft - pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pdf.internal.pageSize.getHeight();
+    }
+
+    const customer = safeName(document.getElementById("customer").value, "Customer");
+    const machineModel = safeName(document.getElementById("mcType").value, "Machine_Model");
+    const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
+
+    pdf.save(`${customer}_${machineModel}_${serialNumber}.pdf`);
+    document.body.classList.remove("pdf-mode");
+}
+
+document.querySelectorAll("#customer,#date,#mcType,#mcNo").forEach(input => {
+    input.addEventListener("input", saveData);
+    input.addEventListener("change", saveData);
+});
+
+const materialSuggestionBox = document.getElementById("materialSuggestions");
+materialSuggestionBox.innerHTML = materialList.map(item => `<option value="${item}">`).join('');
+
+window.addEventListener("DOMContentLoaded", () => {
+    if(!loadData()){
+        document.getElementById("date").valueAsDate = new Date();
+        addRow();
+    }
 });
 </script>
-{% endblock %}
+</body>
+</html>
