@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ACE Material List Web App</title>
+<title>ACE / AMS Material List Web App</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
 <style>
 *{box-sizing:border-box}
 body{
@@ -46,10 +47,12 @@ body{
     display:grid;
     grid-template-columns:130px 1fr 130px 1fr;
     border:2px solid #111827;
-    max-width:720px;
+    max-width:780px;
     margin-bottom:22px;
 }
-.customer-grid label,.customer-grid input{
+.customer-grid label,
+.customer-grid input,
+.customer-grid select{
     border:1px solid #111827;
     padding:9px;
     font-size:14px;
@@ -58,9 +61,50 @@ body{
     font-weight:bold;
     background:#f8fafc;
 }
-.customer-grid input{
+.customer-grid input,
+.customer-grid select{
     border-radius:0;
     outline:none;
+    background:#fff;
+}
+.photo-section{
+    margin-bottom:20px;
+    padding:15px;
+    border:2px solid #111827;
+    border-radius:8px;
+    background:#f8fafc;
+}
+.photo-label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+#photoUpload{margin-bottom:12px}
+.photo-preview-box{
+    min-height:150px;
+    border:2px dashed #94a3b8;
+    border-radius:8px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background:#fff;
+    color:#64748b;
+    font-size:13px;
+    padding:20px;
+}
+.photo-preview-box span{
+    text-align:center;
+    padding:45px 0;
+}
+.photo-preview-box img{
+    width:100%;
+    height:auto;
+    object-fit:contain;
+    border-radius:12px;
+    border:3px solid #cbd5e1;
+    background:#f8fafc;
+    padding:6px;
+    display:block;
 }
 .table-wrap{
     overflow-x:auto;
@@ -82,6 +126,7 @@ th{
     background:#f1f5f9;
     font-weight:bold;
 }
+.material-input,
 select{
     width:100%;
     padding:8px;
@@ -90,7 +135,9 @@ select{
     font-size:14px;
     background:#fff;
 }
-select:focus,input:focus{
+.material-input:focus,
+select:focus,
+input:focus{
     outline:2px solid #2563eb;
     border-color:#2563eb;
 }
@@ -122,7 +169,8 @@ button{
 }
 .pdf-mode .btn-row,
 .pdf-mode .note,
-.pdf-mode .delete-col{
+.pdf-mode .delete-col,
+.pdf-mode #photoUpload{
     display:none !important;
 }
 .pdf-mode .app{
@@ -141,13 +189,20 @@ button{
     .app{margin:0;border-radius:0;min-height:100vh}
     .customer-grid{grid-template-columns:120px 1fr;max-width:100%}
     .topbar h1{font-size:18px}
+    .photo-preview-box{width:100%}
 }
 </style>
 </head>
+
 <body>
 <datalist id="materialSuggestions"></datalist>
+
 <div class="app">
     <div class="topbar">
+        <div>
+            <h1>ACE / AMS Material List</h1>
+            <p>Customer / Machine / Spare Material Entry Web App</p>
+        </div>
         <div class="badge">Sri KM Machine Tools</div>
     </div>
 
@@ -155,13 +210,29 @@ button{
         <div class="customer-grid">
             <label>CUSTOMER</label>
             <input type="text" id="customer" />
+
             <label>DATE</label>
             <input type="date" id="date" />
 
             <label>MC TYPE</label>
             <input type="text" id="mcType" />
+
             <label>MC NO</label>
             <input type="text" id="mcNo" />
+
+            <label>LIST TYPE</label>
+            <select id="listType" onchange="changeMaterialList(); saveData();">
+                <option value="ACE">ACE</option>
+                <option value="AMS">AMS</option>
+            </select>
+        </div>
+
+        <div class="photo-section">
+            <label class="photo-label">UPLOAD PHOTO</label>
+            <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
+            <div id="photoPreviewBox" class="photo-preview-box">
+                <span>No photos selected</span>
+            </div>
         </div>
 
         <div class="table-wrap">
@@ -184,6 +255,9 @@ button{
             <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
         </div>
 
+        <div class="note">
+            Page refresh ஆனாலும் customer details, selected material, quantity, list type, uploaded photo clear ஆகாது. Clear button அழுத்தினால் மட்டும் reset ஆகும்.
+        </div>
     </div>
 </div>
 
@@ -191,13 +265,14 @@ button{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-const materialList = [
+const aceMaterialList = [
     "PM KIT STD",
     "PM KIT STD 1",
     "PM Kit for LM",
     "PM Kit for LM 1",
     "BOOT",
     "Green Push Butten with LED",
+    "Red Push Butten with LED",
     "NEW TYPE POPPET",
     "OLD Type Puppet",
     "KNOB",
@@ -243,19 +318,44 @@ const materialList = [
     "BTP-80 Indexing gear Assembly",
     "Pragathi 8 Station Encoder",
     "Pragathi 12 Station Encoder"
-
 ];
 
+const amsMaterialList = [
+    "0.25 cc CATRIDGE",
+    "Boot",
+    "BT-30 Ball collat",
+    "bt-30 split collat",
+    "RLF Small",
+    "RLF BIG",
+    "Suction strainer"
+];
+
+let materialList = aceMaterialList;
 const qtyList = Array.from({length:100},(_,i)=>i+1);
 const tableBody = document.getElementById("tableBody");
-const storageKey = "ace_material_list_saved_data";
+const storageKey = "ace_ams_material_list_saved_data";
+const photoKey = "ace_ams_material_uploaded_photos";
 
-function materialOptions(){
-    return materialList.map(item => `<option value="${item}">${item}</option>`).join('');
+function updateMaterialSuggestions(){
+    const suggestionBox = document.getElementById("materialSuggestions");
+    suggestionBox.innerHTML = materialList.map(item => `<option value="${item}">`).join("");
 }
 
 function qtyOptions(){
-    return '<option value="">Select Qty</option>' + qtyList.map(qty => `<option value="${qty}">${qty}</option>`).join('');
+    return '<option value="">Select Qty</option>' + qtyList.map(qty => `<option value="${qty}">${qty}</option>`).join("");
+}
+
+function changeMaterialList(){
+    const selectedType = document.getElementById("listType").value;
+    materialList = selectedType === "AMS" ? amsMaterialList : aceMaterialList;
+    updateMaterialSuggestions();
+
+    [...tableBody.rows].forEach(row => {
+        const input = row.cells[1].querySelector("input");
+        if(input && input.value && !materialList.includes(input.value)){
+            input.value = "";
+        }
+    });
 }
 
 function addRow(selectedMaterial = "", selectedQty = ""){
@@ -264,16 +364,14 @@ function addRow(selectedMaterial = "", selectedQty = ""){
     row.innerHTML = `
         <td class="slno">${rowCount}</td>
         <td>
-            <input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" onchange="saveData()" oninput="saveData()">
+            <input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" value="${selectedMaterial}" oninput="saveData()" onchange="saveData()">
         </td>
         <td><select onchange="saveData()">${qtyOptions()}</select></td>
         <td class="delete-col"><button class="delete-btn" onclick="deleteRow(this)"><i class="fa fa-xmark"></i></button></td>
     `;
     tableBody.appendChild(row);
-
-    row.cells[1].querySelector("input").value = selectedMaterial;
     row.cells[2].querySelector("select").value = selectedQty;
-
+    updateSlNo();
     saveData();
 }
 
@@ -289,6 +387,46 @@ function updateSlNo(){
     });
 }
 
+function handlePhotoUpload(event){
+    const files = Array.from(event.target.files);
+    if(!files.length) return;
+
+    const existingPhotos = JSON.parse(localStorage.getItem(photoKey) || "[]");
+    let loadedCount = 0;
+
+    files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e){
+            existingPhotos.push(e.target.result);
+            loadedCount++;
+
+            if(loadedCount === files.length){
+                localStorage.setItem(photoKey, JSON.stringify(existingPhotos));
+                showPhotos(existingPhotos);
+                saveData();
+            }
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function showPhotos(photoArray){
+    const box = document.getElementById("photoPreviewBox");
+    box.innerHTML = "";
+
+    if(!photoArray || !photoArray.length){
+        box.innerHTML = "<span>No photos selected</span>";
+        return;
+    }
+
+    photoArray.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Uploaded Photo";
+        box.appendChild(img);
+    });
+}
+
 function saveData(){
     const rows = [...tableBody.rows].map(row => ({
         material: row.cells[1].querySelector("input").value,
@@ -300,6 +438,7 @@ function saveData(){
         date: document.getElementById("date").value,
         mcType: document.getElementById("mcType").value,
         mcNo: document.getElementById("mcNo").value,
+        listType: document.getElementById("listType").value,
         rows: rows
     };
 
@@ -308,18 +447,33 @@ function saveData(){
 
 function loadData(){
     const saved = localStorage.getItem(storageKey);
+    const savedPhoto = localStorage.getItem(photoKey);
+
+    if(savedPhoto){
+        try{
+            showPhotos(JSON.parse(savedPhoto));
+        }catch(error){
+            showPhotos([]);
+        }
+    }
+
     if(!saved) return false;
 
     try{
         const data = JSON.parse(saved);
+
         document.getElementById("customer").value = data.customer || "";
         document.getElementById("date").value = data.date || "";
         document.getElementById("mcType").value = data.mcType || "";
         document.getElementById("mcNo").value = data.mcNo || "";
+        document.getElementById("listType").value = data.listType || "ACE";
+
+        materialList = document.getElementById("listType").value === "AMS" ? amsMaterialList : aceMaterialList;
+        updateMaterialSuggestions();
 
         tableBody.innerHTML = "";
         if(data.rows && data.rows.length){
-            data.rows.forEach(item => addRow(item.material || '', item.qty || ''));
+            data.rows.forEach(item => addRow(item.material || "", item.qty || ""));
         }else{
             addRow();
         }
@@ -331,14 +485,23 @@ function loadData(){
 }
 
 function clearRows(){
-    if(confirm("Clear all material rows and saved data?")){
+    if(confirm("Clear all material rows, photo and saved data?")){
         localStorage.removeItem(storageKey);
+        localStorage.removeItem(photoKey);
+
         tableBody.innerHTML = "";
         document.getElementById("customer").value = "";
         document.getElementById("mcType").value = "";
         document.getElementById("mcNo").value = "";
+        document.getElementById("listType").value = "ACE";
         document.getElementById("date").valueAsDate = new Date();
+        document.getElementById("photoUpload").value = "";
+
+        materialList = aceMaterialList;
+        updateMaterialSuggestions();
+        showPhotos([]);
         addRow();
+        saveData();
     }
 }
 
@@ -357,26 +520,27 @@ async function downloadPDF(){
     const element = document.querySelector(".app");
 
     const canvas = await html2canvas(element, {
-        scale: 2,
+        scale: 3,
         backgroundColor: "#ffffff"
     });
 
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
     const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
     let heightLeft = pdfHeight;
     let position = 0;
 
     pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-    heightLeft -= pdf.internal.pageSize.getHeight();
+    heightLeft -= pageHeight;
 
     while(heightLeft > 0){
         position = heightLeft - pdfHeight;
         pdf.addPage();
         pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
-        heightLeft -= pdf.internal.pageSize.getHeight();
+        heightLeft -= pageHeight;
     }
 
     const customer = safeName(document.getElementById("customer").value, "Customer");
@@ -387,15 +551,13 @@ async function downloadPDF(){
     document.body.classList.remove("pdf-mode");
 }
 
-document.querySelectorAll("#customer,#date,#mcType,#mcNo").forEach(input => {
+document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType").forEach(input => {
     input.addEventListener("input", saveData);
     input.addEventListener("change", saveData);
 });
 
-const materialSuggestionBox = document.getElementById("materialSuggestions");
-materialSuggestionBox.innerHTML = materialList.map(item => `<option value="${item}">`).join('');
-
 window.addEventListener("DOMContentLoaded", () => {
+    updateMaterialSuggestions();
     if(!loadData()){
         document.getElementById("date").valueAsDate = new Date();
         addRow();
