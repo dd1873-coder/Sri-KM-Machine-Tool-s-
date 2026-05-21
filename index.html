@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="ta">
+<!DOCTYPE html><html lang="ta">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ACE / AMS Material List Web App</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-
-<style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" /><style>
 *{box-sizing:border-box}
 body{
     margin:0;
@@ -191,84 +188,75 @@ button{
     .topbar h1{font-size:18px}
     .photo-preview-box{width:100%}
 }
-</style>
-</head>
-
-<body>
-<datalist id="materialSuggestions"></datalist>
-
-<div class="app">
+</style></head><body>
+<datalist id="materialSuggestions"></datalist><div class="app">
     <div class="topbar">
+        <div>
+            <h1>ACE / AMS Material List</h1>
+            <p>Customer / Machine / Spare Material Entry Web App</p>
+        </div>
         <div class="badge">Sri KM Machine Tools</div>
+    </div><div class="form-area">
+    <div class="customer-grid">
+        <label>CUSTOMER</label>
+        <input type="text" id="customer" />
+
+        <label>DATE</label>
+        <input type="date" id="date" />
+
+        <label>MC TYPE</label>
+        <input type="text" id="mcType" />
+
+        <label>MC NO</label>
+        <input type="text" id="mcNo" />
+
+        <label>LIST TYPE</label>
+        <select id="listType" onchange="changeMaterialList(); saveData();">
+            <option value="ACE">ACE</option>
+            <option value="AMS">AMS</option>
+        </select>
     </div>
 
-    <div class="form-area">
-        <div class="customer-grid">
-            <label>CUSTOMER</label>
-            <input type="text" id="customer" />
-
-            <label>DATE</label>
-            <input type="date" id="date" />
-
-            <label>MC TYPE</label>
-            <input type="text" id="mcType" />
-
-            <label>MC NO</label>
-            <input type="text" id="mcNo" />
-
-            <label>LIST TYPE</label>
-            <select id="listType" onchange="changeMaterialList(); saveData();">
-                <option value="ACE">ACE</option>
-                <option value="AMS">AMS</option>
-            </select>
+    <div class="photo-section">
+        <label class="photo-label">UPLOAD PHOTO</label>
+        <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
+        <div id="photoPreviewBox" class="photo-preview-box">
+            <span>No photos selected</span>
         </div>
+    </div>
 
-        <div class="photo-section">
-            <label class="photo-label">UPLOAD PHOTO</label>
-            <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
-            <div id="photoPreviewBox" class="photo-preview-box">
-                <span>No photos selected</span>
-            </div>
-        </div>
+    <div class="table-wrap">
+        <table id="materialTable">
+            <thead>
+                <tr>
+                    <th style="width:80px">SL NO</th>
+                    <th>MATERIAL NAME / TYPE NEW</th>
+                    <th style="width:180px">QTY</th>
+                    <th class="delete-col" style="width:90px">DELETE</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
 
-        <div class="table-wrap">
-            <table id="materialTable">
-                <thead>
-                    <tr>
-                        <th style="width:80px">SL NO</th>
-                        <th>MATERIAL NAME / TYPE NEW</th>
-                        <th style="width:180px">QTY</th>
-                        <th class="delete-col" style="width:90px">DELETE</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
+    <div class="btn-row">
+        <button class="add-btn" onclick="addRow()"><i class="fa fa-plus"></i> Add Row</button>
+        <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Download PDF</button>
+        <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
+    </div>
 
-        <div class="btn-row">
-            <button class="add-btn" onclick="addRow()"><i class="fa fa-plus"></i> Add Row</button>
-            <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Download PDF</button>
-            <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
-        </div>
-
-        <div class="note">
-            Page refresh ஆனாலும் customer details, selected material, quantity, list type, uploaded photo clear ஆகாது. Clear button அழுத்தினால் மட்டும் reset ஆகும்.
-        </div>
+    <div class="note">
+        Page refresh ஆனாலும் customer details, selected material, quantity, list type, uploaded photo clear ஆகாது. Clear button அழுத்தினால் மட்டும் reset ஆகும்.
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
 const aceMaterialList = [
     "PM KIT STD",
     "PM KIT STD 1",
     "PM Kit for LM",
     "PM Kit for LM 1",
     "BOOT",
-    "Green Push Button with LED",
-    "Red Push Button with LED",
     "NEW TYPE POPPET",
     "OLD Type Puppet",
     "KNOB",
@@ -295,38 +283,10 @@ const aceMaterialList = [
     "SPA1900 Spindle Belt",
     "SPA1950 Spindle Belt",
     "P110 Chucking Cylinder Seal Kit",
-    "P110 V-Seal",
-    "BTP-80 Seal kit",
-    "Gear oil (EP 140)",
-    "Oil level indicator",
-    "Turret Clamp Proximity",
-    "BTP-80 Drum cam roller with pin",
-    "BTP-80 Track roller with pin",
-    "BTP-80 Thrust bearing (51111)",
-    "BTP-80 Disc spring",
-    "Support bearing (6202)",
-    "BTP-80 anti rotation key", 
-    "BTP-80 cam gear with ring",
-    "BTP-80 cam shaft",
-    "BTP-80 follower shaft",
-    "BTP-80 drive shaft",
-    "BTP-80 drive shaft Lock net", 
-    "BTP-80 Indexing gear Assembly",
-    "Pragathi 8 Station Encoder",
-    "Pragathi 12 Station Encoder"
+    "P110 V-Seal"
 ];
 
 const amsMaterialList = [
-    "PMKITVMC001",
-    "PMKITVMC002",
-    "PMKITVMC003",
-    "PMKITVMC004",
-    "PMKITVMC005",
-    "PMKITVMC006",
-    "0.25 cc CATRIDGE",
-    "Boot",
-    "Green Push Button",
-    "Red Push Button",
     "BT-30 Ball collat",
     "bt-30 split collat",
     "RLF Small",
@@ -524,11 +484,11 @@ async function downloadPDF(){
     const element = document.querySelector(".app");
 
     const canvas = await html2canvas(element, {
-        scale: 3,
+        scale: 1.5,
         backgroundColor: "#ffffff"
     });
 
-    const imgData = canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/jpeg", 0.75);
     const pdf = new jsPDF("p", "mm", "a4");
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
@@ -537,13 +497,13 @@ async function downloadPDF(){
     let heightLeft = pdfHeight;
     let position = 0;
 
-    pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+    pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
     heightLeft -= pageHeight;
 
     while(heightLeft > 0){
         position = heightLeft - pdfHeight;
         pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+        pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
         heightLeft -= pageHeight;
     }
 
@@ -567,6 +527,5 @@ window.addEventListener("DOMContentLoaded", () => {
         addRow();
     }
 });
-</script>
-</body>
+</script></body>
 </html>
