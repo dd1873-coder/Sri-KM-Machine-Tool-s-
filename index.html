@@ -380,10 +380,17 @@ function showPhotos(photoArray){
     }
 
     photoArray.forEach(src => {
+        const wrapper = document.createElement("div");
+        wrapper.style.width = "100%";
+
         const img = document.createElement("img");
         img.src = src;
         img.alt = "Uploaded Photo";
-        box.appendChild(img);
+        img.style.width = "100%";
+        img.style.display = "block";
+
+        wrapper.appendChild(img);
+        box.appendChild(wrapper);
     });
 }
 
@@ -484,7 +491,7 @@ async function downloadPDF(){
         backgroundColor: "#ffffff"
     });
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.75);
+    const imgData = canvas.toDataURL("image/jpeg", 0.85);
     const pdf = new jsPDF("p", "mm", "a4");
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
@@ -508,7 +515,9 @@ async function downloadPDF(){
     const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
 
     pdf.save(`${customer}_${machineModel}_${serialNumber}.pdf`);
-    document.body.classList.remove("pdf-mode");
+    setTimeout(() => {
+        document.body.classList.remove("pdf-mode");
+    }, 500);
 }
 
 document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType").forEach(input => {
