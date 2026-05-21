@@ -93,15 +93,33 @@ body{
     text-align:center;
     padding:45px 0;
 }
-.photo-preview-box img{
+.photo-item{
+    position:relative;
     width:100%;
-    height:auto;
-    object-fit:contain;
+    border:2px solid #cbd5e1;
     border-radius:12px;
-    border:3px solid #cbd5e1;
     background:#f8fafc;
     padding:6px;
+}
+.photo-item img{
+    width:100%;
+    height:auto;
     display:block;
+    object-fit:contain;
+    border-radius:8px;
+}
+.remove-photo{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:#dc2626;
+    color:white;
+    border:none;
+    border-radius:50%;
+    width:28px;
+    height:28px;
+    padding:0;
+    font-size:14px;
 }
 .table-wrap{
     overflow-x:auto;
@@ -167,7 +185,8 @@ button{
 .pdf-mode .btn-row,
 .pdf-mode .note,
 .pdf-mode .delete-col,
-.pdf-mode #photoUpload{
+.pdf-mode #photoUpload,
+.pdf-mode .remove-photo{
     display:none !important;
 }
 .pdf-mode .app{
@@ -191,6 +210,7 @@ button{
 </style></head><body>
 <datalist id="materialSuggestions"></datalist><div class="app">
     <div class="topbar">
+      
         <div class="badge">Sri KM Machine Tools</div>
     </div><div class="form-area">
     <div class="customer-grid">
@@ -214,7 +234,7 @@ button{
     </div>
 
     <div class="photo-section">
-        <label class="photo-label">UPLOAD PHOTO</label>
+        <label class="photo-label">UPLOAD PHOTOS</label>
         <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
         <div id="photoPreviewBox" class="photo-preview-box">
             <span>No photos selected</span>
@@ -240,42 +260,15 @@ button{
         <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Download PDF</button>
         <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
     </div>
+
+    <div class="note">
+        Multiple photos ஒரே நேரத்தில் select செய்யலாம். மீண்டும் select செய்தாலும் old photos clear ஆகாமல் add ஆகும்.
+    </div>
 </div>
 
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
 const aceMaterialList = [
-    "PM KIT STD",
-    "PM KIT STD 1",
-    "PM Kit for LM",
-    "PM Kit for LM 1",
-    "BOOT",
-    "NEW TYPE POPPET",
-    "OLD Type Puppet",
-    "KNOB",
-    "0.25 cc CATRIDGE",
-    "RLF SMALL",
-    "RLF Big",
-    "FEETING TYPE 0-70 PRESSURE GAUGE",
-    "0-10 MPA Gauge",
-    "0-28 PRESSURE GAUGE",
-    "Y STAINER",
-    "TAC 25-62 BEARING",
-    "ISO FULX GREES",
-    "6 INCH READTER COOLING FAN",
-    "270 L ENCODER BELT",
-    "300 L ENCODER BELT",
-    "450 L ENCODER BELT",
-    "XPA1450 Spindle Belt",
-    "XPA1650 Spindle Belt",
-    "XPA1800 Spindle Belt",
-    "XPA1850 Spindle Belt",
-    "XPA1900 Spindle Belt",
-    "XPA1950 Spindle Belt",
-    "SPA1850 Spindle Belt",
-    "SPA1900 Spindle Belt",
-    "SPA1950 Spindle Belt",
-    "P110 Chucking Cylinder Seal Kit",
-    "P110 V-Seal"
+    "PM KIT STD","PM KIT STD 1","PM Kit for LM","PM Kit for LM 1","BOOT","NEW TYPE POPPET","OLD Type Puppet","KNOB","0.25 cc CATRIDGE","RLF SMALL","RLF Big","FEETING TYPE 0-70 PRESSURE GAUGE","0-10 MPA Gauge","0-28 PRESSURE GAUGE","Y STAINER","TAC 25-62 BEARING","ISO FULX GREES","6 INCH READTER COOLING FAN","270 L ENCODER BELT","300 L ENCODER BELT","450 L ENCODER BELT","XPA1450 Spindle Belt","XPA1650 Spindle Belt","XPA1800 Spindle Belt","XPA1850 Spindle Belt","XPA1900 Spindle Belt","XPA1950 Spindle Belt","SPA1850 Spindle Belt","SPA1900 Spindle Belt","SPA1950 Spindle Belt","P110 Chucking Cylinder Seal Kit","P110 V-Seal"
 ];
 
 const amsMaterialList = [
@@ -287,14 +280,15 @@ const amsMaterialList = [
 ];
 
 let materialList = aceMaterialList;
+let uploadedPhotos = [];
+
 const qtyList = Array.from({length:100},(_,i)=>i+1);
 const tableBody = document.getElementById("tableBody");
 const storageKey = "ace_ams_material_list_saved_data";
 const photoKey = "ace_ams_material_uploaded_photos";
 
 function updateMaterialSuggestions(){
-    const suggestionBox = document.getElementById("materialSuggestions");
-    suggestionBox.innerHTML = materialList.map(item => `<option value="${item}">`).join("");
+    document.getElementById("materialSuggestions").innerHTML = materialList.map(item => `<option value="${item}">`).join("");
 }
 
 function qtyOptions(){
@@ -319,9 +313,7 @@ function addRow(selectedMaterial = "", selectedQty = ""){
     const row = document.createElement("tr");
     row.innerHTML = `
         <td class="slno">${rowCount}</td>
-        <td>
-            <input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" value="${selectedMaterial}" oninput="saveData()" onchange="saveData()">
-        </td>
+        <td><input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" value="${selectedMaterial}" oninput="saveData()" onchange="saveData()"></td>
         <td><select onchange="saveData()">${qtyOptions()}</select></td>
         <td class="delete-col"><button class="delete-btn" onclick="deleteRow(this)"><i class="fa fa-xmark"></i></button></td>
     `;
@@ -343,53 +335,63 @@ function updateSlNo(){
     });
 }
 
-async function handlePhotoUpload(event){
-    const files = Array.from(event.target.files);
-    if(!files.length) return;
-
-    const existingPhotos = JSON.parse(localStorage.getItem(photoKey) || "[]");
-
-    for(const file of files){
-        const base64 = await fileToBase64(file);
-        existingPhotos.push(base64);
-    }
-
-    localStorage.setItem(photoKey, JSON.stringify(existingPhotos));
-    showPhotos(existingPhotos);
-    saveData();
-}
-
-function fileToBase64(file){
+function fileToDataURL(file){
     return new Promise((resolve,reject)=>{
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
+        reader.onerror = reject;
         reader.readAsDataURL(file);
     });
 }
 
-function showPhotos(photoArray){
+async function handlePhotoUpload(event){
+    const files = Array.from(event.target.files || []);
+    if(files.length === 0) return;
+
+    for(const file of files){
+        if(file.type.startsWith("image/")){
+            const dataUrl = await fileToDataURL(file);
+            uploadedPhotos.push(dataUrl);
+        }
+    }
+
+    localStorage.setItem(photoKey, JSON.stringify(uploadedPhotos));
+    renderPhotos();
+    event.target.value = "";
+}
+
+function renderPhotos(){
     const box = document.getElementById("photoPreviewBox");
     box.innerHTML = "";
 
-    if(!photoArray || !photoArray.length){
+    if(uploadedPhotos.length === 0){
         box.innerHTML = "<span>No photos selected</span>";
         return;
     }
 
-    photoArray.forEach(src => {
-        const wrapper = document.createElement("div");
-        wrapper.style.width = "100%";
+    uploadedPhotos.forEach((src,index)=>{
+        const item = document.createElement("div");
+        item.className = "photo-item";
 
         const img = document.createElement("img");
         img.src = src;
-        img.alt = "Uploaded Photo";
-        img.style.width = "100%";
-        img.style.display = "block";
+        img.alt = "Uploaded Photo " + (index + 1);
 
-        wrapper.appendChild(img);
-        box.appendChild(wrapper);
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "remove-photo";
+        removeBtn.innerHTML = "×";
+        removeBtn.onclick = function(){ removePhoto(index); };
+
+        item.appendChild(img);
+        item.appendChild(removeBtn);
+        box.appendChild(item);
     });
+}
+
+function removePhoto(index){
+    uploadedPhotos.splice(index,1);
+    localStorage.setItem(photoKey, JSON.stringify(uploadedPhotos));
+    renderPhotos();
 }
 
 function saveData(){
@@ -411,22 +413,21 @@ function saveData(){
 }
 
 function loadData(){
-    const saved = localStorage.getItem(storageKey);
-    const savedPhoto = localStorage.getItem(photoKey);
-
-    if(savedPhoto){
+    const savedPhotos = localStorage.getItem(photoKey);
+    if(savedPhotos){
         try{
-            showPhotos(JSON.parse(savedPhoto));
-        }catch(error){
-            showPhotos([]);
+            uploadedPhotos = JSON.parse(savedPhotos) || [];
+        }catch(e){
+            uploadedPhotos = [];
         }
     }
+    renderPhotos();
 
+    const saved = localStorage.getItem(storageKey);
     if(!saved) return false;
 
     try{
         const data = JSON.parse(saved);
-
         document.getElementById("customer").value = data.customer || "";
         document.getElementById("date").value = data.date || "";
         document.getElementById("mcType").value = data.mcType || "";
@@ -443,16 +444,17 @@ function loadData(){
             addRow();
         }
         return true;
-    }catch(error){
+    }catch(e){
         localStorage.removeItem(storageKey);
         return false;
     }
 }
 
 function clearRows(){
-    if(confirm("Clear all material rows, photo and saved data?")){
+    if(confirm("Clear all material rows, photos and saved data?")){
         localStorage.removeItem(storageKey);
         localStorage.removeItem(photoKey);
+        uploadedPhotos = [];
 
         tableBody.innerHTML = "";
         document.getElementById("customer").value = "";
@@ -464,7 +466,7 @@ function clearRows(){
 
         materialList = aceMaterialList;
         updateMaterialSuggestions();
-        showPhotos([]);
+        renderPhotos();
         addRow();
         saveData();
     }
@@ -477,31 +479,31 @@ function safeName(text, fallback){
         .replace(/^_|_$/g, "");
 }
 
-async function downloadPDF(){
-    saveData();
-    document.body.classList.add("pdf-mode");
-
-    const { jsPDF } = window.jspdf;
-    const element = document.querySelector(".app");
-
+function waitForImages(){
     const images = document.querySelectorAll("#photoPreviewBox img");
-
-    await Promise.all([...images].map(img => {
-        if(img.complete) return Promise.resolve();
-
+    return Promise.all([...images].map(img => {
+        if(img.complete && img.naturalHeight !== 0) return Promise.resolve();
         return new Promise(resolve => {
             img.onload = resolve;
             img.onerror = resolve;
         });
     }));
+}
 
-    await new Promise(resolve => setTimeout(resolve, 800));
+async function downloadPDF(){
+    saveData();
+    document.body.classList.add("pdf-mode");
+    await waitForImages();
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const { jsPDF } = window.jspdf;
+    const element = document.querySelector(".app");
 
     const canvas = await html2canvas(element, {
         scale: 1.5,
+        backgroundColor: "#ffffff",
         useCORS: true,
         allowTaint: true,
-        backgroundColor: "#ffffff",
         scrollY: -window.scrollY
     });
 
@@ -514,13 +516,13 @@ async function downloadPDF(){
     let heightLeft = pdfHeight;
     let position = 0;
 
-    pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
+    pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight, undefined, "FAST");
     heightLeft -= pageHeight;
 
     while(heightLeft > 0){
         position = heightLeft - pdfHeight;
         pdf.addPage();
-        pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
+        pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight, undefined, "FAST");
         heightLeft -= pageHeight;
     }
 
@@ -529,9 +531,7 @@ async function downloadPDF(){
     const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
 
     pdf.save(`${customer}_${machineModel}_${serialNumber}.pdf`);
-    setTimeout(() => {
-        document.body.classList.remove("pdf-mode");
-    }, 500);
+    document.body.classList.remove("pdf-mode");
 }
 
 document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType").forEach(input => {
@@ -544,6 +544,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if(!loadData()){
         document.getElementById("date").valueAsDate = new Date();
         addRow();
+        renderPhotos();
     }
 });
 </script></body>
