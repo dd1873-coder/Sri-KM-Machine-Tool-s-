@@ -240,10 +240,6 @@ button{
         <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Download PDF</button>
         <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
     </div>
-
-    <div class="note">
-        Page refresh ஆனாலும் customer details, selected material, quantity, list type, uploaded photo clear ஆகாது. Clear button அழுத்தினால் மட்டும் reset ஆகும்.
-    </div>
 </div>
 
 </div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
@@ -347,25 +343,27 @@ function updateSlNo(){
     });
 }
 
-function handlePhotoUpload(event){
+async function handlePhotoUpload(event){
     const files = Array.from(event.target.files);
     if(!files.length) return;
 
     const existingPhotos = JSON.parse(localStorage.getItem(photoKey) || "[]");
-    let loadedCount = 0;
 
-    files.forEach(file => {
+    for(const file of files){
+        const base64 = await fileToBase64(file);
+        existingPhotos.push(base64);
+    }
+
+    localStorage.setItem(photoKey, JSON.stringify(existingPhotos));
+    showPhotos(existingPhotos);
+    saveData();
+}
+
+function fileToBase64(file){
+    return new Promise((resolve,reject)=>{
         const reader = new FileReader();
-        reader.onload = function(e){
-            existingPhotos.push(e.target.result);
-            loadedCount++;
-
-            if(loadedCount === files.length){
-                localStorage.setItem(photoKey, JSON.stringify(existingPhotos));
-                showPhotos(existingPhotos);
-                saveData();
-            }
-        };
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
         reader.readAsDataURL(file);
     });
 }
@@ -486,9 +484,25 @@ async function downloadPDF(){
     const { jsPDF } = window.jspdf;
     const element = document.querySelector(".app");
 
+    const images = document.querySelectorAll("#photoPreviewBox img");
+
+    await Promise.all([...images].map(img => {
+        if(img.complete) return Promise.resolve();
+
+        return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+        });
+    }));
+
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     const canvas = await html2canvas(element, {
         scale: 1.5,
-        backgroundColor: "#ffffff"
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        scrollY: -window.scrollY
     });
 
     const imgData = canvas.toDataURL("image/jpeg", 0.85);
