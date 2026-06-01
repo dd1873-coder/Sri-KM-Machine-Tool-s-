@@ -10,84 +10,106 @@
 *{box-sizing:border-box}
 body{
     margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#eef2f7;
-    color:#111827;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
 }
 .app{
     max-width:1100px;
-    margin:20px auto;
+    margin:24px auto;
     background:#fff;
-    border-radius:14px;
-    box-shadow:0 12px 35px rgba(0,0,0,.12);
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(15,23,42,0.08);
     overflow:hidden;
+    border:1px solid #e2e8f0;
 }
 .topbar{
-    background:linear-gradient(135deg,#0f172a,#1e40af);
+    background:linear-gradient(135deg,#0f172a,#1e3a8a);
     color:#fff;
-    padding:18px 22px;
+    padding:20px 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:15px;
     flex-wrap:wrap;
 }
-.topbar h1{margin:0;font-size:22px;letter-spacing:.4px}
-.topbar p{margin:4px 0 0;font-size:13px;color:#cbd5e1}
+.topbar h1{margin:0;font-size:20px;letter-spacing:.5px;font-weight:700}
 .badge{
     background:#22c55e;
     color:#fff;
-    padding:8px 12px;
+    padding:6px 14px;
     border-radius:30px;
     font-size:13px;
-    font-weight:bold;
+    font-weight:600;
+    letter-spacing:0.5px;
 }
-.form-area{padding:20px}
+.form-area{padding:24px}
 .customer-grid{
     display:grid;
-    grid-template-columns:130px 1fr 130px 1fr;
-    border:2px solid #111827;
-    max-width:900px;
-    margin-bottom:22px;
+    grid-template-columns:140px 1fr 140px 1fr;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    max-width:100%;
+    margin-bottom:24px;
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(0,0,0,0.02);
 }
 .customer-grid label,
 .customer-grid input,
 .customer-grid select{
-    border:1px solid #111827;
-    padding:99px;
+    padding:12px;
     font-size:14px;
+    border:none;
 }
 .customer-grid label{
-    font-weight:bold;
+    font-weight:600;
     background:#f8fafc;
-    padding:9px;
+    color:#475569;
+    border-right:1px solid #e2e8f0;
+    border-bottom:1px solid #e2e8f0;
 }
 .customer-grid input,
 .customer-grid select{
-    border-radius:0;
     outline:none;
     background:#fff;
-    padding:9px;
+    color:#0f172a;
+    border-bottom:1px solid #e2e8f0;
+}
+.customer-grid input:not(:nth-child(4n)),
+.customer-grid select:not(:nth-child(4n)){
+    border-right:1px solid #e2e8f0;
+}
+/* Remove bottom border from last row items */
+.customer-grid label:nth-last-child(2),
+.customer-grid select:last-child,
+.customer-grid label:nth-last-child(4),
+.customer-grid input:nth-last-child(3){
+    border-bottom:none;
 }
 .photo-section{
-    margin-bottom:20px;
-    padding:15px;
-    border:2px solid #111827;
+    margin-bottom:24px;
+    padding:20px;
+    border:1px solid #cbd5e1;
     border-radius:8px;
     background:#f8fafc;
 }
 .photo-label{
     display:block;
-    font-weight:bold;
-    margin-bottom:10px;
+    font-weight:600;
+    color:#334155;
+    margin-bottom:12px;
+    font-size:14px;
 }
-#photoUpload{margin-bottom:12px}
+#photoUpload{
+    margin-bottom:14px;
+    font-size:14px;
+}
 .photo-preview-box{
-    min-height:150px;
-    border:2px dashed #94a3b8;
+    min-height:120px;
+    border:2px dashed #cbd5e1;
     border-radius:8px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
     gap:16px;
     background:#fff;
     color:#64748b;
@@ -97,96 +119,130 @@ body{
 .photo-preview-box span{
     grid-column:1/-1;
     text-align:center;
-    padding:45px 0;
+    padding:35px 0;
 }
 .photo-item{
     position:relative;
     width:100%;
-    border:2px solid #cbd5e1;
-    border-radius:12px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
     background:#f8fafc;
     padding:6px;
 }
 .photo-item img{
     width:100%;
-    height:220px;
+    height:180px;
     display:block;
     object-fit:contain;
-    border-radius:8px;
+    border-radius:6px;
     background:#fff;
 }
 .remove-photo{
     position:absolute;
-    top:10px;
-    right:10px;
-    background:#dc2626;
+    top:12px;
+    right:12px;
+    background:#ef4444;
     color:white;
     border:none;
     border-radius:50%;
-    width:28px;
-    height:28px;
+    width:24px;
+    height:24px;
     padding:0;
     font-size:14px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
 }
 .table-wrap{
     overflow-x:auto;
-    border:2px solid #111827;
+    border:1px solid #cbd5e1;
     border-radius:8px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.02);
 }
 table{
     width:100%;
     border-collapse:collapse;
     min-width:750px;
+    background:#fff;
 }
 th,td{
-    border:1px solid #111827;
-    padding:8px;
-    text-align:center;
+    border-bottom:1px solid #e2e8f0;
+    border-right:1px solid #e2e8f0;
+    padding:10px 12px;
     font-size:14px;
 }
+th:last-child, td:last-child{
+    border-right:none;
+}
+tr:last-child td{
+    border-bottom:none;
+}
 th{
-    background:#f1f5f9;
-    font-weight:bold;
+    background:#1e293b;
+    color:#ffffff;
+    font-weight:600;
+    text-align:center;
 }
 .material-input,
 select{
     width:100%;
-    padding:8px;
-    border:1px solid #94a3b8;
+    padding:8px 12px;
+    border:1px solid #cbd5e1;
     border-radius:6px;
     font-size:14px;
     background:#fff;
+    color:#0f172a;
+    outline:none;
+    transition:border-color 0.2s;
 }
 .material-input:focus,
 select:focus,
 input:focus{
-    outline:2px solid #2563eb;
     border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,0.15);
 }
 .btn-row{
     display:flex;
-    gap:10px;
-    margin-top:16px;
+    gap:12px;
+    margin-top:24px;
     flex-wrap:wrap;
 }
 button{
     border:none;
-    padding:11px 16px;
-    border-radius:8px;
+    padding:12px 20px;
+    border-radius:6px;
     cursor:pointer;
-    font-weight:bold;
+    font-weight:600;
+    font-size:14px;
     color:#fff;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:background-color 0.2s;
 }
 .add-btn{background:#2563eb}
+.add-btn:hover{background:#1d4ed8}
 .download-btn{background:#16a34a}
+.download-btn:hover{background:#15803d}
 .clear-btn{background:#dc2626}
+.clear-btn:hover{background:#b91c1c}
 .delete-btn{
     background:#ef4444;
-    padding:7px 10px;
+    padding:6px 12px;
+    border-radius:4px;
 }
-@media(max-width:700px){
-    .app{margin:0;border-radius:0;min-height:100vh}
-    .customer-grid{grid-template-columns:120px 1fr;max-width:100%}
+.delete-btn:hover{background:#dc2626}
+
+@media(max-width:768px){
+    .app{margin:0;border-radius:0;border:none}
+    .customer-grid{grid-template-columns:110px 1fr;border-radius:4px;}
+    .customer-grid label, .customer-grid input, .customer-grid select{padding:10px;}
+    .customer-grid input:not(:nth-child(4n)), .customer-grid select:not(:nth-child(4n)){border-right:none;}
+    .customer-grid label:not(:nth-child(2n)){border-right:1px solid #e2e8f0;}
+    .customer-grid label, .customer-grid input, .customer-grid select{border-bottom:1px solid #e2e8f0;}
+    .customer-grid label:nth-last-child(3), .customer-grid select:last-child{border-bottom:none;}
     .photo-preview-box{grid-template-columns:1fr}
 }
 </style>
@@ -197,7 +253,8 @@ button{
 
 <div class="app" id="reportArea">
     <div class="topbar">
-        <div class="badge">Sri KM Machine Tools</div>
+        <h1>Sri KM Machine Tools</h1>
+        <div class="badge">Material Checklist</div>
     </div>
 
     <div class="form-area">
@@ -258,7 +315,7 @@ button{
 
         <div class="btn-row">
             <button class="add-btn" onclick="addRow()"><i class="fa fa-plus"></i> Add Row</button>
-            <button style="background:#2563eb" onclick="downloadWord()"><i class="fa fa-file-word"></i> Download Word</button>
+            <button style="background:#475569" onclick="downloadWord()"><i class="fa fa-file-word"></i> Download Word</button>
             <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-file-pdf"></i> Download PDF</button>
             <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear All</button>
         </div>
@@ -270,7 +327,7 @@ button{
 
 <script>
 const aceMaterialList = [
-    "PM KIT STD","PM KIT STD 1","PM Kit for LM","PM Kit for LM 1","BOOT","NEW TYPE POPPET","OLD Type Puppet","C2 Red wiper","KNOB","0.25 cc CATRIDGE","RLF SMALL","RLF Big","Bowl Type RLF(YIL)","FEETING TYPE 0-70 PRESSURE GAUGE","0-10 MPA Gauge","0-28 PRESSURE GAUGE","Y STAINER","TAC 25-62 BEARING","ISO FULX GREES","6 INCH READTER COOLING FAN","270 L ENCODER BELT","300 L ENCODER BELT","450 L ENCODER BELT","XPA1450 Spindle Belt","XPA1650 Spindle Belt","XPA1800 Spindle Belt","XPA1850 Spindle Belt","XPA1900 Spindle Belt","XPA1950 Spindle Belt","SPA1850 Spindle Belt","SPA1900 Spindle Belt","SPA1950 Spindle Belt","P110 Chucking Cylinder Seal Kit","P110 V-Seal"
+    "PM KIT STD","PM KIT STD 1","PM Kit for LM","PM Kit for LM 1","PM KIT FOR LT-2 LM 500","BOOT","NEW TYPE POPPET","OLD Type Puppet","C2 Red wiper","KNOB","0.25 cc CATRIDGE","RLF SMALL","RLF Big","Bowl Type RLF(YIL)","FEETING TYPE 0-70 PRESSURE GAUGE","0-10 MPA Gauge","0-28 PRESSURE GAUGE","Y STAINER","TAC 25-62 BEARING","ISO FULX GREES","6 INCH READTER COOLING FAN","270 L ENCODER BELT","300 L ENCODER BELT","450 L ENCODER BELT","XPA1450 Spindle Belt","XPA1650 Spindle Belt","XPA1800 Spindle Belt","XPA1850 Spindle Belt","XPA1900 Spindle Belt","XPA1950 Spindle Belt","SPA1850 Spindle Belt","SPA1900 Spindle Belt","SPA1950 Spindle Belt","P110 Chucking Cylinder Seal Kit","P110 V-Seal"
 ];
 
 const amsMaterialList = [
@@ -319,10 +376,10 @@ function addRow(selectedMaterial = "", selectedQty = ""){
     const rowCount = tableBody.rows.length + 1;
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td class="slno">${rowCount}</td>
+        <td class="slno" style="text-align:center;color:#64748b;font-weight:600;">${rowCount}</td>
         <td><input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" value="${escapeHtml(selectedMaterial)}" oninput="saveData()" onchange="saveData()"></td>
         <td><select onchange="saveData()">${qtyOptions()}</select></td>
-        <td class="delete-col"><button class="delete-btn" onclick="deleteRow(this)"><i class="fa fa-xmark"></i></button></td>
+        <td class="delete-col" style="text-align:center;"><button class="delete-btn" onclick="deleteRow(this)"><i class="fa fa-trash-can"></i></button></td>
     `;
     tableBody.appendChild(row);
     row.cells[2].querySelector("select").value = selectedQty;
@@ -392,7 +449,7 @@ async function handlePhotoUpload(event){
     try {
         localStorage.setItem(photoKey, JSON.stringify(uploadedPhotos));
     } catch(e) {
-        alert("Storage Full! Could not save photo to local memory.");
+        alert("Storage allocation layout exceeded. Local mirror cannot save additional structures.");
     }
     renderPhotos();
     event.target.value = "";
@@ -412,7 +469,7 @@ function renderPhotos(){
     box.innerHTML = "";
 
     if(uploadedPhotos.length === 0){
-        box.innerHTML = "<span>No photos selected</span>";
+        box.innerHTML = "<span>No photos uploaded</span>";
         updatePhotoSectionState();
         return;
     }
@@ -572,7 +629,7 @@ function getRows(){
     })).filter(row => row.material || row.qty);
 }
 
-// NEW HIGHLY OPTIMIZED SELECTABLE TEXT PDF GENERATION
+// UPGRADED SELECTABLE PDF GENERATION WITH CLEAN SYSTEM BORDERS
 async function downloadPDF(){
     saveData();
     const { jsPDF } = window.jspdf;
@@ -585,77 +642,83 @@ async function downloadPDF(){
     const listType = selectedText("listType");
     const engineer = selectedText("engineerName");
 
-    // Header Band
+    // Clean Corporate Top Header Segment
     pdf.setFillColor(15, 23, 42);
-    pdf.rect(0, 0, 210, 20, "F");
+    pdf.rect(0, 0, 210, 24, "F");
     pdf.setFont("Helvetica", "bold");
-    pdf.setFontSize(14);
+    pdf.setFontSize(16);
     pdf.setTextColor(255, 255, 255);
-    pdf.text("Sri KM Machine Tools", 105, 13, { align: "center" });
+    pdf.text("Sri KM Machine Tools", 105, 15, { align: "center" });
 
-    // Document Title
+    // Document Subtitle Block
     pdf.setFontSize(12);
-    pdf.setTextColor(17, 24, 39);
-    pdf.text("Material Requirement Report", 105, 30, { align: "center" });
+    pdf.setTextColor(51, 65, 85);
+    pdf.text("Material Requirement Report", 105, 34, { align: "center" });
 
-    // Info Meta Details Layout Matrix
+    // Information Field Grid Layer with Clean Muted Borders
     pdf.autoTable({
-        startY: 36,
+        startY: 40,
         theme: "plain",
-        styles: { fontSize: 10, cellPadding: 3, textColor: [17, 24, 39] },
+        styles: { fontSize: 10, cellPadding: 4, textColor: [15, 23, 42], lineColor: [203, 213, 225], lineWidth: 0.3 },
         columnStyles: {
-            0: { fontStyle: "bold", cellWidth: 30 },
-            1: { cellWidth: 65 },
-            2: { fontStyle: "bold", cellWidth: 30 },
-            3: { cellWidth: 65 }
+            0: { fontStyle: "bold", fillColor: [248, 250, 252], cellWidth: 32 },
+            1: { cellWidth: 63 },
+            2: { fontStyle: "bold", fillColor: [248, 250, 252], cellWidth: 32 },
+            3: { cellWidth: 63 }
         },
         body: [
-            ["Customer:", customer, "Date:", date],
-            ["Machine Type:", mcType, "Serial No:", mcNo],
-            ["List Type:", listType, "Engineer:", engineer]
+            ["Customer", customer, "Date", date],
+            ["Machine Type", mcType, "Serial No", mcNo],
+            ["List Type", listType, "Engineer", engineer]
         ],
-        tableLineColor: [17, 24, 39],
-        tableLineWidth: 0.5,
         willDrawCell: function(data) {
+            // Draw clean clean box dividers
             data.doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
         }
     });
 
-    // Material Core Items Table (Using Native Text Data)
+    // Material Core Table Layer
     const rows = getRows();
     const tableBodyData = rows.map(r => [r.sl, r.material, r.qty]);
 
     pdf.autoTable({
         startY: pdf.lastAutoTable.finalY + 8,
-        head: [["SL NO", "MATERIAL NAME", "QTY"]],
+        head: [["SL NO", "MATERIAL NAME / DESCRIPTION", "QTY"]],
         body: tableBodyData,
         theme: "grid",
-        headStyles: { fillColor: [241, 245, 249], textColor: [17, 24, 39], fontStyle: "bold", halign: "center" },
-        styles: { fontSize: 10, cellPadding: 4, textColor: [0, 0, 0] },
+        headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: "bold", halign: "center" },
+        styles: { fontSize: 10, cellPadding: 5, textColor: [15, 23, 42], lineColor: [226, 232, 240] },
         columnStyles: {
-            0: { halign: "center", cellWidth: 20 },
+            0: { halign: "center", cellWidth: 20, fontStyle: "bold", textColor: [100, 116, 139] },
             1: { halign: "left" },
             2: { halign: "center", cellWidth: 30 }
         }
     });
 
-    // Handle Image attachments efficiently on subsequent structural layout frames
+    // Image Appendix Segment
     if (uploadedPhotos.length > 0) {
         pdf.addPage();
         
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(11);
-        pdf.setFillColor(241, 245, 249);
-        pdf.rect(14, 15, 182, 10, "F");
-        pdf.rect(14, 15, 182, 10, "S");
-        pdf.setTextColor(17, 24, 39);
-        pdf.text("ATTACHED PHOTOS", 105, 21.5, { align: "center" });
+        pdf.setFillColor(248, 250, 252);
+        pdf.rect(14, 15, 182, 11, "F");
+        
+        // Balanced Gray Border line for section banner
+        pdf.setDrawColor(203, 213, 225);
+        pdf.rect(14, 15, 182, 11, "S");
+        
+        pdf.setTextColor(15, 23, 42);
+        pdf.text("ATTACHED REPORT IMAGES", 105, 22, { align: "center" });
 
         let currentY = 32;
-        const imgWidth = 85;
+        const imgWidth = 86;
         const imgHeight = 65;
-        const col1X = 15;
+        const col1X = 14;
         const col2X = 110;
+
+        // Reset frame line configuration
+        pdf.setDrawColor(226, 232, 240);
 
         for (let i = 0; i < uploadedPhotos.length; i++) {
             if (currentY + imgHeight > 280) {
@@ -669,7 +732,7 @@ async function downloadPDF(){
                 pdf.addImage(uploadedPhotos[i], "JPEG", xPos, currentY, imgWidth, imgHeight);
                 pdf.rect(xPos, currentY, imgWidth, imgHeight, "S");
             } catch (imgError) {
-                console.error("Failed to render attachment frame", imgError);
+                console.error("Failed to render attachment layout element", imgError);
             }
 
             if (i % 2 !== 0 || i === uploadedPhotos.length - 1) {
@@ -687,25 +750,25 @@ function buildWordDocument(){
     const materialRows = rows.length
         ? rows.map(row => `
             <tr>
-                <td style="border:1px solid #000;padding:6px;text-align:center;">${row.sl}</td>
-                <td style="border:1px solid #000;padding:6px;">${escapeHtml(row.material)}</td>
-                <td style="border:1px solid #000;padding:6px;text-align:center;">${escapeHtml(row.qty)}</td>
+                <td style="border:1px solid #cbd5e1;padding:8px;text-align:center;color:#64748b;">${row.sl}</td>
+                <td style="border:1px solid #cbd5e1;padding:8px;">${escapeHtml(row.material)}</td>
+                <td style="border:1px solid #cbd5e1;padding:8px;text-align:center;">${escapeHtml(row.qty)}</td>
             </tr>
         `).join("")
-        : `<tr><td colspan="3" style="border:1px solid #000;padding:6px;text-align:center;">No materials added</td></tr>`;
+        : `<tr><td colspan="3" style="border:1px solid #cbd5e1;padding:8px;text-align:center;">No materials added</td></tr>`;
 
     const photoSection = uploadedPhotos.length
         ? `
-        <h3 style="margin-top:20px;font-family:Arial;border-bottom:1px solid #000;padding-bottom:5px;page-break-before:always;">Attached Service Photos</h3>
+        <h3 style="margin-top:24px;font-family:Arial;color:#1e293b;border-bottom:1px solid #cbd5e1;padding-bottom:6px;page-break-before:always;">Attached Service Photos</h3>
         <table style="width:100%;border:none;">
             ${uploadedPhotos.map((src, idx) => {
                 if (idx % 2 === 0) {
-                    return `<tr><td style="border:none;width:50%;padding:10px;text-align:center;">
-                                <img src="${src}" style="width:280px;height:210px;object-fit:contain;border:1px solid #ccc;"/>
+                    return `<tr><td style="border:none;width:50%;padding:8px;text-align:center;">
+                                <img src="${src}" style="width:280px;height:210px;object-fit:contain;border:1px solid #e2e8f0;"/>
                             </td>`;
                 } else {
-                    return `<td style="border:none;width:50%;padding:10px;text-align:center;">
-                                <img src="${src}" style="width:280px;height:210px;object-fit:contain;border:1px solid #ccc;"/>
+                    return `<td style="border:none;width:50%;padding:8px;text-align:center;">
+                                <img src="${src}" style="width:280px;height:210px;object-fit:contain;border:1px solid #e2e8f0;"/>
                             </td></tr>`;
                 }
             }).join("")}
@@ -719,24 +782,24 @@ function buildWordDocument(){
     <head>
     <meta charset="UTF-8">
     <style>
-    body{font-family:Arial, sans-serif;padding:20px;line-height:1.4;}
-    table{border-collapse:collapse;width:100%;margin-bottom:15px;}
-    td,th{border:1px solid #000;padding:8px;font-size:12px;vertical-align:middle;}
-    th{background:#f1f5f9;font-weight:bold;}
-    .hdr{background:#0f172a;color:#ffffff;text-align:center;padding:12px;}
+    body{font-family:Arial, sans-serif;padding:20px;line-height:1.4;color:#0f172a;}
+    table{border-collapse:collapse;width:100%;margin-bottom:16px;}
+    td,th{border:1px solid #cbd5e1;padding:8px;font-size:12px;vertical-align:middle;}
+    th{background:#1e293b;color:#ffffff;font-weight:bold;}
+    .hdr{background:#0f172a;color:#ffffff;text-align:center;padding:14px;}
     </style>
     </head>
     <body>
     <div class="hdr">
-        <h4 style="margin:4px 0 0 0;font-size:13px;font-weight:normal;">Sri KM Machine Tools</h4>
+        <h3 style="margin:0;font-size:16px;">Sri KM Machine Tools</h3>
     </div>
     <br/>
     <table>
     <tr>
-    <td style="background:#f8fafc;font-weight:bold;width:15%;">Customer</td>
-    <td style="width:35%;">${escapeHtml(document.getElementById("customer").value)}</td>
-    <td style="background:#f8fafc;font-weight:bold;width:15%;">Date</td>
-    <td style="width:35%;">${escapeHtml(document.getElementById("date").value)}</td>
+    <td style="background:#f8fafc;font-weight:bold;width:18%;">Customer</td>
+    <td style="width:32%;">${escapeHtml(document.getElementById("customer").value)}</td>
+    <td style="background:#f8fafc;font-weight:bold;width:18%;">Date</td>
+    <td style="width:32%;">${escapeHtml(document.getElementById("date").value)}</td>
     </tr>
     <tr>
     <td style="background:#f8fafc;font-weight:bold;">Machine Type</td>
@@ -752,10 +815,10 @@ function buildWordDocument(){
     </tr>
     </table>
 
-    <h3 style="font-size:14px;margin-top:20px;">Required Materials & Spares</h3>
+    <h3 style="font-size:14px;margin-top:20px;color:#1e293b;">Required Materials & Spares</h3>
     <table>
     <tr>
-    <th style="width:10%">SL NO</th>
+    <th style="width:12%">SL NO</th>
     <th>MATERIAL NAME</th>
     <th style="width:20%">QTY</th>
     </tr>
