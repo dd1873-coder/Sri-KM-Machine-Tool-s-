@@ -1,9 +1,12 @@
-<!DOCTYPE html><html lang="ta">
+<!DOCTYPE html>
+<html lang="ta">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ACE / AMS Material List & quotation making sheet</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" /><style>
+<title>ACE / AMS Material List Web App</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+<style>
 *{box-sizing:border-box}
 body{
     margin:0;
@@ -44,7 +47,7 @@ body{
     display:grid;
     grid-template-columns:130px 1fr 130px 1fr;
     border:2px solid #111827;
-    max-width:780px;
+    max-width:900px;
     margin-bottom:22px;
 }
 .customer-grid label,
@@ -81,15 +84,16 @@ body{
     min-height:150px;
     border:2px dashed #94a3b8;
     border-radius:8px;
-    display:flex;
-    flex-direction:column;
-    gap:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:16px;
     background:#fff;
     color:#64748b;
     font-size:13px;
-    padding:20px;
+    padding:16px;
 }
 .photo-preview-box span{
+    grid-column:1/-1;
     text-align:center;
     padding:45px 0;
 }
@@ -103,10 +107,11 @@ body{
 }
 .photo-item img{
     width:100%;
-    height:auto;
+    height:220px;
     display:block;
     object-fit:contain;
     border-radius:8px;
+    background:#fff;
 }
 .remove-photo{
     position:absolute;
@@ -182,91 +187,195 @@ button{
     font-size:13px;
     color:#475569;
 }
-.pdf-mode .btn-row,
-.pdf-mode .note,
-.pdf-mode .delete-col,
-.pdf-mode #photoUpload,
-.pdf-mode .remove-photo{
-    display:none !important;
+
+#pdfReportWrap{
+    position:absolute;
+    left:-99999px;
+    top:0;
+    background:#fff;
 }
-.pdf-mode .app{
-    box-shadow:none;
+.pdf-report{
+    width:794px;
+    background:#fff;
+    color:#000;
+    font-family:Arial,Helvetica,sans-serif;
+    padding:18px;
+}
+.pdf-header{
+    background:#0f172a;
+    color:#fff;
+    padding:14px;
+    text-align:center;
+    margin-bottom:12px;
+}
+.pdf-header h1{
     margin:0;
-    border-radius:0;
+    font-size:22px;
 }
-.pdf-mode select,
-.pdf-mode input{
-    border:none;
-    outline:none;
-    appearance:none;
-    font-weight:500;
+.pdf-header p{
+    margin:5px 0 0;
+    font-size:12px;
+}
+.pdf-title{
+    font-size:15px;
+    font-weight:bold;
+    text-align:center;
+    margin:10px 0;
+}
+.pdf-details{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:12px;
+    table-layout:fixed;
+}
+.pdf-details td{
+    border:1px solid #000;
+    padding:7px;
+    font-size:12px;
+    text-align:left;
+    word-break:break-word;
+    white-space:normal;
+}
+.pdf-details .label{
+    width:18%;
+    font-weight:bold;
+    background:#f1f1f1;
+}
+.pdf-details .value{
+    width:32%;
+}
+.pdf-materials{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+    margin-bottom:12px;
+}
+.pdf-materials th,
+.pdf-materials td{
+    border:1px solid #000;
+    padding:7px;
+    font-size:12px;
+    word-break:break-word;
+    white-space:normal;
+}
+.pdf-materials th{
+    background:#e5e7eb;
+    font-weight:bold;
+}
+.pdf-photo-title{
+    font-weight:bold;
+    text-align:center;
+    border:1px solid #000;
+    padding:8px;
+    margin-top:12px;
+    background:#f1f1f1;
+}
+.pdf-photo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:10px;
+}
+.pdf-photo-item{
+    border:1px solid #000;
+    padding:5px;
+    page-break-inside:avoid;
+}
+.pdf-photo-item img{
+    width:100%;
+    height:300px;
+    object-fit:contain;
+    display:block;
+    background:#fff;
 }
 @media(max-width:700px){
     .app{margin:0;border-radius:0;min-height:100vh}
     .customer-grid{grid-template-columns:120px 1fr;max-width:100%}
     .topbar h1{font-size:18px}
-    .photo-preview-box{width:100%}
+    .photo-preview-box{grid-template-columns:1fr}
 }
-</style></head><body>
-<datalist id="materialSuggestions"></datalist><div class="app">
+</style>
+</head>
+
+<body>
+<datalist id="materialSuggestions"></datalist>
+
+<div class="app" id="reportArea">
     <div class="topbar">
-      
         <div class="badge">Sri KM Machine Tools</div>
-    </div><div class="form-area">
-    <div class="customer-grid">
-        <label>CUSTOMER</label>
-        <input type="text" id="customer" />
-
-        <label>DATE</label>
-        <input type="date" id="date" />
-
-        <label>MC TYPE</label>
-        <input type="text" id="mcType" />
-
-        <label>MC NO</label>
-        <input type="text" id="mcNo" />
-
-        <label>LIST TYPE</label>
-        <select id="listType" onchange="changeMaterialList(); saveData();">
-            <option value="ACE">ACE</option>
-            <option value="AMS">AMS</option>
-        </select>
     </div>
 
-    <div class="photo-section">
-        <label class="photo-label">UPLOAD PHOTOS</label>
-        <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
-        <div id="photoPreviewBox" class="photo-preview-box">
-            <span>No photos selected</span>
+    <div class="form-area">
+        <div class="customer-grid">
+            <label>CUSTOMER</label>
+            <input type="text" id="customer" style="text-transform: uppercase;" />
+
+            <label>DATE</label>
+            <input type="date" id="date" />
+
+            <label>MC TYPE</label>
+            <input type="text" id="mcType" style="text-transform: uppercase;" />
+
+            <label>MC NO</label>
+            <input type="text" id="mcNo" style="text-transform: uppercase;" />
+
+            <label>LIST TYPE</label>
+            <select id="listType" onchange="changeMaterialList(); saveData();">
+                <option value="ACE">ACE</option>
+                <option value="AMS">AMS</option>
+            </select>
+
+            <label>ENGINEER</label>
+            <select id="engineerName" onchange="saveData();">
+                <option value="">Select Engineer</option>
+                <option value="J.Srinivasan">J.Srinivasan</option>
+                <option value="Dinesh T">Dinesh T</option>
+                <option value="Suresh C">Suresh C</option>
+                <option value="Suresh M">Suresh M</option>
+                <option value="Vignesh M">Vignesh M</option>
+                <option value="Arun S">Arun S</option>
+                <option value="Arun V">Arun V</option>
+                <option value="Pradeep M">Pradeep M</option>
+            </select>
         </div>
-    </div>
 
-    <div class="table-wrap">
-        <table id="materialTable">
-            <thead>
-                <tr>
-                    <th style="width:80px">SL NO</th>
-                    <th>MATERIAL NAME / TYPE NEW</th>
-                    <th style="width:180px">QTY</th>
-                    <th class="delete-col" style="width:90px">DELETE</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
+        <div class="photo-section no-photo" id="photoSection">
+            <label class="photo-label">UPLOAD PHOTOS</label>
+            <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
+            <div id="photoPreviewBox" class="photo-preview-box">
+                <span>No photos selected</span>
+            </div>
+        </div>
 
-    <div class="btn-row">
-        <button class="add-btn" onclick="addRow()"><i class="fa fa-plus"></i> Add Row</button>
-        <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Download PDF</button>
-        <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear</button>
-    </div>
+        <div class="table-wrap">
+            <table id="materialTable">
+                <thead>
+                    <tr>
+                        <th style="width:80px">SL NO</th>
+                        <th>MATERIAL NAME / TYPE NEW</th>
+                        <th style="width:180px">QTY</th>
+                        <th class="delete-col" style="width:90px">DELETE</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
 
-    <div class="note">
-        Multiple photos ஒரே நேரத்தில் select செய்யலாம். மீண்டும் select செய்தாலும் old photos clear ஆகாமல் add ஆகும்.
+        <div class="btn-row">
+            <button class="add-btn" onclick="addRow()"><i class="fa fa-plus"></i> Add Row</button>
+            <button style="background:#2563eb" onclick="downloadWord()"><i class="fa fa-file-word"></i> Download Word</button>
+            <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-file-pdf"></i> Download PDF</button>
+            <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear All</button>
+        </div>
     </div>
 </div>
 
-</div><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
+<div id="pdfReportWrap"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
 const aceMaterialList = [
     "PM KIT STD","PM KIT STD 1","PM Kit for LM","PM Kit for LM 1","BOOT","NEW TYPE POPPET","OLD Type Puppet","KNOB","0.25 cc CATRIDGE","RLF SMALL","RLF Big","FEETING TYPE 0-70 PRESSURE GAUGE","0-10 MPA Gauge","0-28 PRESSURE GAUGE","Y STAINER","TAC 25-62 BEARING","ISO FULX GREES","6 INCH READTER COOLING FAN","270 L ENCODER BELT","300 L ENCODER BELT","450 L ENCODER BELT","XPA1450 Spindle Belt","XPA1650 Spindle Belt","XPA1800 Spindle Belt","XPA1850 Spindle Belt","XPA1900 Spindle Belt","XPA1950 Spindle Belt","SPA1850 Spindle Belt","SPA1900 Spindle Belt","SPA1950 Spindle Belt","P110 Chucking Cylinder Seal Kit","P110 V-Seal"
 ];
@@ -309,11 +418,18 @@ function changeMaterialList(){
 }
 
 function addRow(selectedMaterial = "", selectedQty = ""){
+    const lastRow = tableBody.lastElementChild;
+    if (lastRow && selectedMaterial === "") {
+        const lastInput = lastRow.cells[1].querySelector("input").value.trim();
+        const lastSelect = lastRow.cells[2].querySelector("select").value;
+        if (lastInput === "" && lastSelect === "") return; 
+    }
+
     const rowCount = tableBody.rows.length + 1;
     const row = document.createElement("tr");
     row.innerHTML = `
         <td class="slno">${rowCount}</td>
-        <td><input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" value="${selectedMaterial}" oninput="saveData()" onchange="saveData()"></td>
+        <td><input list="materialSuggestions" class="material-input" placeholder="Select or Type Material" value="${escapeHtml(selectedMaterial)}" oninput="saveData()" onchange="saveData()"></td>
         <td><select onchange="saveData()">${qtyOptions()}</select></td>
         <td class="delete-col"><button class="delete-btn" onclick="deleteRow(this)"><i class="fa fa-xmark"></i></button></td>
     `;
@@ -325,6 +441,9 @@ function addRow(selectedMaterial = "", selectedQty = ""){
 
 function deleteRow(btn){
     btn.closest("tr").remove();
+    if(tableBody.rows.length === 0) {
+        addRow();
+    }
     updateSlNo();
     saveData();
 }
@@ -355,9 +474,22 @@ async function handlePhotoUpload(event){
         }
     }
 
-    localStorage.setItem(photoKey, JSON.stringify(uploadedPhotos));
+    try {
+        localStorage.setItem(photoKey, JSON.stringify(uploadedPhotos));
+    } catch(e) {
+        alert("Local storage limit reached. Try using fewer or smaller photos.");
+    }
     renderPhotos();
     event.target.value = "";
+}
+
+function updatePhotoSectionState(){
+    const photoSection = document.getElementById("photoSection");
+    if(uploadedPhotos.length === 0){
+        photoSection.classList.add("no-photo");
+    }else{
+        photoSection.classList.remove("no-photo");
+    }
 }
 
 function renderPhotos(){
@@ -366,6 +498,7 @@ function renderPhotos(){
 
     if(uploadedPhotos.length === 0){
         box.innerHTML = "<span>No photos selected</span>";
+        updatePhotoSectionState();
         return;
     }
 
@@ -386,6 +519,8 @@ function renderPhotos(){
         item.appendChild(removeBtn);
         box.appendChild(item);
     });
+
+    updatePhotoSectionState();
 }
 
 function removePhoto(index){
@@ -401,11 +536,12 @@ function saveData(){
     }));
 
     const data = {
-        customer: document.getElementById("customer").value,
+        customer: document.getElementById("customer").value.toUpperCase(),
         date: document.getElementById("date").value,
-        mcType: document.getElementById("mcType").value,
-        mcNo: document.getElementById("mcNo").value,
+        mcType: document.getElementById("mcType").value.toUpperCase(),
+        mcNo: document.getElementById("mcNo").value.toUpperCase(),
         listType: document.getElementById("listType").value,
+        engineerName: document.getElementById("engineerName").value,
         rows: rows
     };
 
@@ -433,6 +569,7 @@ function loadData(){
         document.getElementById("mcType").value = data.mcType || "";
         document.getElementById("mcNo").value = data.mcNo || "";
         document.getElementById("listType").value = data.listType || "ACE";
+        document.getElementById("engineerName").value = data.engineerName || "";
 
         materialList = document.getElementById("listType").value === "AMS" ? amsMaterialList : aceMaterialList;
         updateMaterialSuggestions();
@@ -461,6 +598,7 @@ function clearRows(){
         document.getElementById("mcType").value = "";
         document.getElementById("mcNo").value = "";
         document.getElementById("listType").value = "ACE";
+        document.getElementById("engineerName").value = "";
         document.getElementById("date").valueAsDate = new Date();
         document.getElementById("photoUpload").value = "";
 
@@ -479,8 +617,110 @@ function safeName(text, fallback){
         .replace(/^_|_$/g, "");
 }
 
-function waitForImages(){
-    const images = document.querySelectorAll("#photoPreviewBox img");
+function fileBaseName(){
+    const customer = safeName(document.getElementById("customer").value, "Customer");
+    const machineModel = safeName(document.getElementById("mcType").value, "Machine_Model");
+    const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
+    return `${customer}_${machineModel}_${serialNumber}`;
+}
+
+function escapeHtml(text){
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function selectedText(id){
+    const el = document.getElementById(id);
+    if(el.tagName === "SELECT"){
+        return el.options[el.selectedIndex]?.text || "";
+    }
+    return el.value || "";
+}
+
+function getRows(){
+    return [...tableBody.rows].map((row,index)=>({
+        sl:index+1,
+        material: row.cells[1].querySelector("input").value,
+        qty: row.cells[2].querySelector("select").value
+    })).filter(row => row.material || row.qty);
+}
+
+function buildPdfReport(){
+    const rows = getRows();
+    const wrap = document.getElementById("pdfReportWrap");
+
+    const materialRows = rows.length
+        ? rows.map(row => `
+            <tr>
+                <td style="width:10%; text-align:center;">${row.sl}</td>
+                <td style="width:70%; text-align:left;">${escapeHtml(row.material)}</td>
+                <td style="width:20%; text-align:center;">${escapeHtml(row.qty)}</td>
+            </tr>
+        `).join("")
+        : `<tr><td colspan="3" style="text-align:center;">No materials added</td></tr>`;
+
+    const photoSection = uploadedPhotos.length
+        ? `
+            <div class="pdf-photo-title">PHOTOS</div>
+            <div class="pdf-photo-grid">
+                ${uploadedPhotos.map(src => `
+                    <div class="pdf-photo-item">
+                        <img src="${src}" />
+                    </div>
+                `).join("")}
+            </div>
+        `
+        : "";
+
+    wrap.innerHTML = `
+        <div class="pdf-report" id="pdfReport">
+            <div class="pdf-header">
+                <p>Sri KM Machine Tools</p>
+            </div>
+
+            <div class="pdf-title">Material Requirement Report</div>
+
+            <table class="pdf-details">
+                <tr>
+                    <td class="label">Customer</td>
+                    <td class="value">${escapeHtml(document.getElementById("customer").value)}</td>
+                    <td class="label">Date</td>
+                    <td class="value">${escapeHtml(document.getElementById("date").value)}</td>
+                </tr>
+                <tr>
+                    <td class="label">Machine Type</td>
+                    <td class="value">${escapeHtml(document.getElementById("mcType").value)}</td>
+                    <td class="label">Serial No</td>
+                    <td class="value">${escapeHtml(document.getElementById("mcNo").value)}</td>
+                </tr>
+                <tr>
+                    <td class="label">List Type</td>
+                    <td class="value">${escapeHtml(selectedText("listType"))}</td>
+                    <td class="label">Engineer Name</td>
+                    <td class="value">${escapeHtml(selectedText("engineerName"))}</td>
+                </tr>
+            </table>
+
+            <table class="pdf-materials">
+                <tr>
+                    <th style="width:10%;">SL NO</th>
+                    <th style="width:70%;">MATERIAL NAME</th>
+                    <th style="width:20%;">QTY</th>
+                </tr>
+                ${materialRows}
+            </table>
+
+            ${photoSection}
+        </div>
+    `;
+}
+
+function waitForPdfImages(){
+    const images = document.querySelectorAll("#pdfReport img");
     return Promise.all([...images].map(img => {
         if(img.complete && img.naturalHeight !== 0) return Promise.resolve();
         return new Promise(resolve => {
@@ -490,25 +730,129 @@ function waitForImages(){
     }));
 }
 
+function buildWordDocument(){
+    const rows = getRows();
+
+    const materialRows = rows.length
+        ? rows.map(row => `
+            <tr>
+                <td style="border:1px solid #000;padding:6px;text-align:center;">${row.sl}</td>
+                <td style="border:1px solid #000;padding:6px;">${escapeHtml(row.material)}</td>
+                <td style="border:1px solid #000;padding:6px;text-align:center;">${escapeHtml(row.qty)}</td>
+            </tr>
+        `).join("")
+        : `<tr><td colspan="3" style="border:1px solid #000;padding:6px;text-align:center;">No materials added</td></tr>`;
+
+    const photoSection = uploadedPhotos.length
+        ? `
+        <h3 style="margin-top:20px;font-family:Arial;border-bottom:1px solid #000;padding-bottom:5px;">Attached Service Photos</h3>
+        <table style="width:100%;border:none;">
+            ${uploadedPhotos.map((src, idx) => {
+                if (idx % 2 === 0) {
+                    return `<tr><td style="border:none;width:50%;padding:10px;text-align:center;">
+                                <img src="${src}" style="width:280px;height:210px;object-fit:contain;border:1px solid #ccc;"/>
+                            </td>`;
+                } else {
+                    return `<td style="border:none;width:50%;padding:10px;text-align:center;">
+                                <img src="${src}" style="width:280px;height:210px;object-fit:contain;border:1px solid #ccc;"/>
+                            </td></tr>`;
+                }
+            }).join("")}
+            ${uploadedPhotos.length % 2 !== 0 ? '<td style="border:none;width:50%;"></td></tr>' : ''}
+        </table>
+        `
+        : '';
+
+    return `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head>
+    <meta charset="UTF-8">
+    <style>
+    body{font-family:Arial, sans-serif;padding:20px;line-height:1.4;}
+    table{border-collapse:collapse;width:100%;margin-bottom:15px;}
+    td,th{border:1px solid #000;padding:8px;font-size:12px;vertical-align:middle;}
+    th{background:#f1f5f9;font-weight:bold;}
+    .hdr{background:#0f172a;color:#ffffff;text-align:center;padding:12px;}
+    </style>
+    </head>
+    <body>
+    <div class="hdr">
+        <h4 style="margin:4px 0 0 0;font-size:13px;font-weight:normal;">Sri KM Machine Tools</h4>
+    </div>
+    <br/>
+    <table>
+    <tr>
+    <td style="background:#f8fafc;font-weight:bold;width:15%;">Customer</td>
+    <td style="width:35%;">${escapeHtml(document.getElementById("customer").value)}</td>
+    <td style="background:#f8fafc;font-weight:bold;width:15%;">Date</td>
+    <td style="width:35%;">${escapeHtml(document.getElementById("date").value)}</td>
+    </tr>
+    <tr>
+    <td style="background:#f8fafc;font-weight:bold;">Machine Type</td>
+    <td>${escapeHtml(document.getElementById("mcType").value)}</td>
+    <td style="background:#f8fafc;font-weight:bold;">Serial No</td>
+    <td>${escapeHtml(document.getElementById("mcNo").value)}</td>
+    </tr>
+    <tr>
+    <td style="background:#f8fafc;font-weight:bold;">List Type</td>
+    <td>${escapeHtml(selectedText("listType"))}</td>
+    <td style="background:#f8fafc;font-weight:bold;">Engineer</td>
+    <td>${escapeHtml(selectedText("engineerName"))}</td>
+    </tr>
+    </table>
+
+    <h3 style="font-size:14px;margin-top:20px;">Required Materials & Spares</h3>
+    <table>
+    <tr>
+    <th style="width:10%">SL NO</th>
+    <th>MATERIAL NAME</th>
+    <th style="width:20%">QTY</th>
+    </tr>
+    ${materialRows}
+    </table>
+
+    ${photoSection}
+    </body>
+    </html>`;
+}
+
+function downloadWord(){
+    saveData();
+    const content = buildWordDocument();
+    const blob = new Blob(['\ufeff', content], {type:'application/msword;charset=utf-8'});
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileBaseName() + '.doc';
+
+    document.body.appendChild(link);
+    link.click();
+
+    setTimeout(()=>{
+        URL.revokeObjectURL(link.href);
+        document.body.removeChild(link);
+    },100);
+}
+
 async function downloadPDF(){
     saveData();
-    document.body.classList.add("pdf-mode");
-    await waitForImages();
-    await new Promise(resolve => setTimeout(resolve, 500));
+    buildPdfReport();
+    await waitForPdfImages();
+    await new Promise(resolve => setTimeout(resolve, 400));
 
     const { jsPDF } = window.jspdf;
-    const element = document.querySelector(".app");
+    const element = document.getElementById("pdfReport");
 
     const canvas = await html2canvas(element, {
-        scale: 1.5,
+        scale: 2,
         backgroundColor: "#ffffff",
         useCORS: true,
-        allowTaint: true,
-        scrollY: -window.scrollY
+        allowTaint: true
     });
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.85);
+    const imgData = canvas.toDataURL("image/jpeg", 0.95);
     const pdf = new jsPDF("p", "mm", "a4");
+
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
@@ -526,15 +870,11 @@ async function downloadPDF(){
         heightLeft -= pageHeight;
     }
 
-    const customer = safeName(document.getElementById("customer").value, "Customer");
-    const machineModel = safeName(document.getElementById("mcType").value, "Machine_Model");
-    const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
-
-    pdf.save(`${customer}_${machineModel}_${serialNumber}.pdf`);
-    document.body.classList.remove("pdf-mode");
+    pdf.save(fileBaseName() + ".pdf");
+    document.getElementById("pdfReportWrap").innerHTML = "";
 }
 
-document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType").forEach(input => {
+document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType,#engineerName").forEach(input => {
     input.addEventListener("input", saveData);
     input.addEventListener("change", saveData);
 });
@@ -547,5 +887,6 @@ window.addEventListener("DOMContentLoaded", () => {
         renderPhotos();
     }
 });
-</script></body>
+</script>
+</body>
 </html>
