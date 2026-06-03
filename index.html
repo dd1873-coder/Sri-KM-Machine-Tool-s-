@@ -22,6 +22,7 @@ body{
     box-shadow:0 4px 20px rgba(15,23,42,0.08);
     overflow:hidden;
     border:1px solid #e2e8f0;
+    position:relative;
 }
 .topbar{
     background:linear-gradient(135deg,#0f172a,#1e3a8a);
@@ -34,6 +35,21 @@ body{
     flex-wrap:wrap;
 }
 .topbar h1{margin:0;font-size:20px;letter-spacing:.5px;font-weight:700}
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+.report-no-badge{
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.3);
+    color:#fff;
+    padding:6px 12px;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.5px;
+}
 .badge{
     background:#22c55e;
     color:#fff;
@@ -43,7 +59,10 @@ body{
     font-weight:600;
     letter-spacing:0.5px;
 }
-.form-area{padding:24px}
+.form-area{
+    padding:24px;
+    padding-bottom:50px;
+}
 .customer-grid{
     display:grid;
     grid-template-columns:140px 1fr 140px 1fr;
@@ -79,7 +98,6 @@ body{
 .customer-grid select:not(:nth-child(4n)){
     border-right:1px solid #e2e8f0;
 }
-/* Remove bottom border from last row items */
 .customer-grid label:nth-last-child(2),
 .customer-grid select:last-child,
 .customer-grid label:nth-last-child(4),
@@ -100,10 +118,7 @@ body{
     margin-bottom:12px;
     font-size:14px;
 }
-#photoUpload{
-    margin-bottom:14px;
-    font-size:14px;
-}
+#photoUpload{margin-bottom:14px;font-size:14px}
 .photo-preview-box{
     min-height:120px;
     border:2px dashed #cbd5e1;
@@ -173,12 +188,8 @@ th,td{
     padding:10px 12px;
     font-size:14px;
 }
-th:last-child, td:last-child{
-    border-right:none;
-}
-tr:last-child td{
-    border-bottom:none;
-}
+th:last-child, td:last-child{border-right:none}
+tr:last-child td{border-bottom:none}
 th{
     background:#1e293b;
     color:#ffffff;
@@ -234,6 +245,16 @@ button{
     border-radius:4px;
 }
 .delete-btn:hover{background:#dc2626}
+.bottom-tag{
+    position:absolute;
+    bottom:12px;
+    right:24px;
+    font-size:11px;
+    color:#94a3b8;
+    font-weight:600;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+}
 
 @media(max-width:768px){
     .app{margin:0;border-radius:0;border:none}
@@ -244,6 +265,7 @@ button{
     .customer-grid label, .customer-grid input, .customer-grid select{border-bottom:1px solid #e2e8f0;}
     .customer-grid label:nth-last-child(3), .customer-grid select:last-child{border-bottom:none;}
     .photo-preview-box{grid-template-columns:1fr}
+    .bottom-tag{right:16px;bottom:8px}
 }
 </style>
 </head>
@@ -254,22 +276,25 @@ button{
 <div class="app" id="reportArea">
     <div class="topbar">
         <h1>Sri KM Machine Tools</h1>
-        <div class="badge">Material Checklist</div>
+        <div class="topbar-right">
+            <div class="report-no-badge" id="reportNoDisplay">Report No: 001</div>
+            <div class="badge">Live</div>
+        </div>
     </div>
 
     <div class="form-area">
         <div class="customer-grid">
-            <label>CUSTOMER</label>
-            <input type="text" id="customer" style="text-transform: uppercase;" />
+            <label>CUSTOMER *</label>
+            <input type="text" id="customer" style="text-transform: uppercase;" placeholder="REQUIRED" />
 
             <label>DATE</label>
             <input type="date" id="date" />
 
-            <label>MC TYPE</label>
-            <input type="text" id="mcType" style="text-transform: uppercase;" />
+            <label>MC TYPE *</label>
+            <input type="text" id="mcType" style="text-transform: uppercase;" placeholder="REQUIRED" />
 
-            <label>MC NO</label>
-            <input type="text" id="mcNo" style="text-transform: uppercase;" />
+            <label>MC NO *</label>
+            <input type="text" id="mcNo" style="text-transform: uppercase;" placeholder="REQUIRED" />
 
             <label>LIST TYPE</label>
             <select id="listType" onchange="changeMaterialList(); saveData();">
@@ -277,9 +302,10 @@ button{
                 <option value="AMS">AMS</option>
             </select>
 
-            <label>ENGINEER</label>
+            <label>ENGINEER *</label>
             <select id="engineerName" onchange="saveData();">
                 <option value="">Select Engineer</option>
+                <option value="J.Srinivasan">M.Saravanan</option>
                 <option value="J.Srinivasan">J.Srinivasan</option>
                 <option value="Dinesh T">Dinesh T</option>
                 <option value="Suresh C">Suresh C</option>
@@ -295,7 +321,7 @@ button{
             <label class="photo-label">UPLOAD PHOTOS</label>
             <input type="file" id="photoUpload" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
             <div id="photoPreviewBox" class="photo-preview-box">
-                <span>No photos selected</span>
+                <span>No photos uploaded</span>
             </div>
         </div>
 
@@ -319,6 +345,8 @@ button{
             <button class="download-btn" onclick="downloadPDF()"><i class="fa fa-file-pdf"></i> Download PDF</button>
             <button class="clear-btn" onclick="clearRows()"><i class="fa fa-trash"></i> Clear All</button>
         </div>
+        
+        <div class="bottom-tag">Material Checklist</div>
     </div>
 </div>
 
@@ -327,12 +355,18 @@ button{
 
 <script>
 const aceMaterialList = [
-    "PM KIT STD","PM KIT STD 1","PM Kit for LM","PM Kit for LM 1","PM KIT FOR LT-2 LM 500","BOOT","NEW TYPE POPPET","OLD Type Puppet","C2 Red wiper","KNOB","0.25 cc CATRIDGE","RLF SMALL","RLF Big","Bowl Type RLF(YIL)","FEETING TYPE 0-70 PRESSURE GAUGE","0-10 MPA Gauge","0-28 PRESSURE GAUGE","Y STAINER","TAC 25-62 BEARING","ISO FULX GREES","6 INCH READTER COOLING FAN","270 L ENCODER BELT","300 L ENCODER BELT","450 L ENCODER BELT","XPA1450 Spindle Belt","XPA1650 Spindle Belt","XPA1800 Spindle Belt","XPA1850 Spindle Belt","XPA1900 Spindle Belt","XPA1950 Spindle Belt","SPA1850 Spindle Belt","SPA1900 Spindle Belt","SPA1950 Spindle Belt","P110 Chucking Cylinder Seal Kit","P110 V-Seal"
+    "PM KIT STD","PM KIT STD 1","PM Kit for LM","PM Kit for LM 1","BOOT","NEW TYPE POPPET","OLD Type Puppet",
+    "C2 Red wiper","KNOB","25TAC62 Bearing","ISO Fulx Gress","0.25 cc CATRIDGE","RLF SMALL","RLF Big",
+    "Bowl Type RLF(YIL)","FEETING TYPE 0-70 PRESSURE GAUGE","0-10 MPA Gauge","0-28 PRESSURE GAUGE","Y STAINER",
+    "TAC 25-62 BEARING","ISO FULX GREES","6 INCH READTER COOLING FAN","270 L ENCODER BELT","300 L ENCODER BELT",
+    "450 L ENCODER BELT","XPA1450 Spindle Belt","XPA1650 Spindle Belt","XPA1800 Spindle Belt","Radiator assembly",
+    "XPA1850 Spindle Belt","XPA1900 Spindle Belt","XPA1950 Spindle Belt","SPA1850 Spindle Belt","6inch Radiator Cooling Fan 220V",
+    "SPA1900 Spindle Belt","SPA1950 Spindle Belt","P110 Chucking Cylinder Seal Kit","P110 V-Seal"
 ];
 
 const amsMaterialList = [
-    "PMKITVMC001","PMKITVMC002","PMKITVMC003","PMKITVMC004","PMKITVMC005","PMKITVMC006",
-    "BT-40 Ball collat","BT-40 split collat","BT-30 Ball collat","BT-30 split collat","BT-30 compression spring",
+    "PMKITVMC001","PMKITVMC002","PMKITVMC003","PMKITVMC004","PMKITVMC005","PMKITVMC006","Boot","Radiator assembly","6inch Radiator Cooling Fan 220V",
+    "BT-40 Ball collat","BT-40 split collat","BT-30 Ball collat","BT-30 split collat","BT-30 Compression Spring","25TAC62 Bearing","30TAC62 Bearing","ISO Fulx Gress",
     "12*50mm Sensor","6*50mm Sensor","Sensor Cable","RLF Small","RLF BIG","Bowl Type RLF(YIL)","Suction strainer"
 ];
 
@@ -343,6 +377,23 @@ const qtyList = Array.from({length:100},(_,i)=>i+1);
 const tableBody = document.getElementById("tableBody");
 const storageKey = "ace_ams_material_list_saved_data";
 const photoKey = "ace_ams_material_uploaded_photos";
+const reportCountKey = "ace_ams_report_serial_counter_index";
+
+function getReportNumber() {
+    let count = localStorage.getItem(reportCountKey);
+    if (!count) {
+        count = 1;
+        localStorage.setItem(reportCountKey, count);
+    }
+    return String(count).padStart(3, '0');
+}
+
+function incrementReportNumber() {
+    let count = parseInt(localStorage.getItem(reportCountKey) || 1);
+    count++;
+    localStorage.setItem(reportCountKey, count);
+    document.getElementById("reportNoDisplay").textContent = "Report No: " + String(count).padStart(3, '0');
+}
 
 function updateMaterialSuggestions(){
     document.getElementById("materialSuggestions").innerHTML = materialList.map(item => `<option value="${item}">`).join("");
@@ -402,7 +453,7 @@ function updateSlNo(){
     });
 }
 
-function resizeImage(file, maxWidth = 800, maxHeight = 600) {
+function downscaleImageDimensions(file, maxWidth = 800, maxHeight = 600) {
     return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -416,20 +467,21 @@ function resizeImage(file, maxWidth = 800, maxHeight = 600) {
 
                 if (width > height) {
                     if (width > maxWidth) {
-                        height *= maxWidth / width;
+                        height = Math.round(height * (maxWidth / width));
                         width = maxWidth;
                     }
                 } else {
                     if (height > maxHeight) {
-                        width *= maxHeight / height;
+                        width = Math.round(width * (maxHeight / height));
                         height = maxHeight;
                     }
                 }
+                
                 canvas.width = width;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                resolve(canvas.toDataURL('image/jpeg', 0.75));
+                resolve(canvas.toDataURL('image/jpeg', 0.80));
             };
         };
     });
@@ -441,15 +493,15 @@ async function handlePhotoUpload(event){
 
     for(const file of files){
         if(file.type.startsWith("image/")){
-            const optimizedDataUrl = await resizeImage(file);
-            uploadedPhotos.push(optimizedDataUrl);
+            const downscaledDataUrl = await downscaleImageDimensions(file);
+            uploadedPhotos.push(downscaledDataUrl);
         }
     }
 
     try {
         localStorage.setItem(photoKey, JSON.stringify(uploadedPhotos));
     } catch(e) {
-        alert("Storage allocation layout exceeded. Local mirror cannot save additional structures.");
+        alert("Local capacity full. Photos cannot be saved into cache storage frame.");
     }
     renderPhotos();
     event.target.value = "";
@@ -597,11 +649,34 @@ function safeName(text, fallback){
         .replace(/^_|_$/g, "");
 }
 
+// EXPLICIT UPGRADE: Named exact file output signature template configuration layer
 function fileBaseName(){
     const customer = safeName(document.getElementById("customer").value, "Customer");
     const machineModel = safeName(document.getElementById("mcType").value, "Machine_Model");
     const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
-    return `${customer}_${machineModel}_${serialNumber}`;
+    const reportNum = getReportNumber();
+    
+    // Output naming layout format matches requirements structure exactly
+    return `${customer}_${machineModel}_${serialNumber}_${reportNum}`;
+}
+
+function validateInputFormFields() {
+    const customer = document.getElementById("customer").value.trim();
+    const mcType = document.getElementById("mcType").value.trim();
+    const mcNo = document.getElementById("mcNo").value.trim();
+    const engineer = document.getElementById("engineerName").value;
+
+    let missingFields = [];
+    if (!customer) missingFields.push("CUSTOMER NAME");
+    if (!mcType) missingFields.push("MACHINE TYPE (MC TYPE)");
+    if (!mcNo) missingFields.push("MACHINE SERIAL NUMBER (MC NO)");
+    if (!engineer) missingFields.push("ENGINEER NAME");
+
+    if (missingFields.length > 0) {
+        alert("ERROR: CANNOT DOWNLOAD FILE!\n\nPlease fill out the following required entries:\n❌ " + missingFields.join("\n❌ "));
+        return false;
+    }
+    return true;
 }
 
 function escapeHtml(text){
@@ -629,12 +704,14 @@ function getRows(){
     })).filter(row => row.material || row.qty);
 }
 
-// UPGRADED SELECTABLE PDF GENERATION WITH CLEAN SYSTEM BORDERS
 async function downloadPDF(){
+    if (!validateInputFormFields()) return;
+    
     saveData();
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "mm", "a4");
 
+    const curReportNo = "Report No: " + getReportNumber();
     const customer = document.getElementById("customer").value;
     const date = document.getElementById("date").value;
     const mcType = document.getElementById("mcType").value;
@@ -642,20 +719,21 @@ async function downloadPDF(){
     const listType = selectedText("listType");
     const engineer = selectedText("engineerName");
 
-    // Clean Corporate Top Header Segment
     pdf.setFillColor(15, 23, 42);
     pdf.rect(0, 0, 210, 24, "F");
+    
     pdf.setFont("Helvetica", "bold");
-    pdf.setFontSize(16);
+    pdf.setFontSize(15);
     pdf.setTextColor(255, 255, 255);
-    pdf.text("Sri KM Machine Tools", 105, 15, { align: "center" });
+    pdf.text("Sri KM Machine Tools", 14, 15);
+    
+    pdf.setFontSize(11);
+    pdf.text(curReportNo, 196, 15, { align: "right" });
 
-    // Document Subtitle Block
     pdf.setFontSize(12);
     pdf.setTextColor(51, 65, 85);
     pdf.text("Material Requirement Report", 105, 34, { align: "center" });
 
-    // Information Field Grid Layer with Clean Muted Borders
     pdf.autoTable({
         startY: 40,
         theme: "plain",
@@ -669,15 +747,13 @@ async function downloadPDF(){
         body: [
             ["Customer", customer, "Date", date],
             ["Machine Type", mcType, "Serial No", mcNo],
-            ["List Type", listType, "Engineer", engineer]
+            ["List Type", listType, "Engineer Name", engineer]
         ],
         willDrawCell: function(data) {
-            // Draw clean clean box dividers
             data.doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
         }
     });
 
-    // Material Core Table Layer
     const rows = getRows();
     const tableBodyData = rows.map(r => [r.sl, r.material, r.qty]);
 
@@ -695,16 +771,13 @@ async function downloadPDF(){
         }
     });
 
-    // Image Appendix Segment
     if (uploadedPhotos.length > 0) {
         pdf.addPage();
-        
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(11);
         pdf.setFillColor(248, 250, 252);
         pdf.rect(14, 15, 182, 11, "F");
         
-        // Balanced Gray Border line for section banner
         pdf.setDrawColor(203, 213, 225);
         pdf.rect(14, 15, 182, 11, "S");
         
@@ -717,7 +790,6 @@ async function downloadPDF(){
         const col1X = 14;
         const col2X = 110;
 
-        // Reset frame line configuration
         pdf.setDrawColor(226, 232, 240);
 
         for (let i = 0; i < uploadedPhotos.length; i++) {
@@ -742,10 +814,12 @@ async function downloadPDF(){
     }
 
     pdf.save(fileBaseName() + ".pdf");
+    incrementReportNumber();
 }
 
 function buildWordDocument(){
     const rows = getRows();
+    const curReportNo = "Report No: " + getReportNumber();
 
     const materialRows = rows.length
         ? rows.map(row => `
@@ -786,13 +860,16 @@ function buildWordDocument(){
     table{border-collapse:collapse;width:100%;margin-bottom:16px;}
     td,th{border:1px solid #cbd5e1;padding:8px;font-size:12px;vertical-align:middle;}
     th{background:#1e293b;color:#ffffff;font-weight:bold;}
-    .hdr{background:#0f172a;color:#ffffff;text-align:center;padding:14px;}
+    .hdr{background:#0f172a;color:#ffffff;padding:14px;}
     </style>
     </head>
     <body>
-    <div class="hdr">
-        <h3 style="margin:0;font-size:16px;">Sri KM Machine Tools</h3>
-    </div>
+    <table style="width:100%;background:#0f172a;margin-bottom:20px;border:none;">
+        <tr>
+            <td style="border:none;padding:10px;"><h3 style="margin:0;color:#ffffff;font-size:16px;">Sri KM Machine Tools</h3></td>
+            <td style="border:none;padding:10px;text-align:right;"><h4 style="margin:0;color:#ffffff;font-size:12px;">${curReportNo}</h4></td>
+        </tr>
+    </table>
     <br/>
     <table>
     <tr>
@@ -831,6 +908,8 @@ function buildWordDocument(){
 }
 
 function downloadWord(){
+    if (!validateInputFormFields()) return;
+    
     saveData();
     const content = buildWordDocument();
     const blob = new Blob(['\ufeff', content], {type:'application/msword;charset=utf-8'});
@@ -846,6 +925,8 @@ function downloadWord(){
         URL.revokeObjectURL(link.href);
         document.body.removeChild(link);
     },100);
+    
+    incrementReportNumber();
 }
 
 document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType,#engineerName").forEach(input => {
@@ -855,6 +936,7 @@ document.querySelectorAll("#customer,#date,#mcType,#mcNo,#listType,#engineerName
 
 window.addEventListener("DOMContentLoaded", () => {
     updateMaterialSuggestions();
+    document.getElementById("reportNoDisplay").textContent = "Report No: " + getReportNumber();
     if(!loadData()){
         document.getElementById("date").value = getTodayDateString();
         addRow();
