@@ -6,6 +6,8 @@
 <title>Material List App</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
+<link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/dd1873-coder/Sri-KM-Machine-Tool-s-/main/my.jpeg" />
+
 <style>
 *{box-sizing:border-box}
 body{
@@ -305,7 +307,7 @@ button{
             <label>ENGINEER *</label>
             <select id="engineerName" onchange="saveData();">
                 <option value="">Select Engineer</option>
-                <option value="J.Srinivasan">M.Saravanan</option>
+                <option value="M.Saravanan">M.Saravanan</option>
                 <option value="J.Srinivasan">J.Srinivasan</option>
                 <option value="Dinesh T">Dinesh T</option>
                 <option value="Suresh C">Suresh C</option>
@@ -649,14 +651,12 @@ function safeName(text, fallback){
         .replace(/^_|_$/g, "");
 }
 
-// EXPLICIT UPGRADE: Named exact file output signature template configuration layer
 function fileBaseName(){
     const customer = safeName(document.getElementById("customer").value, "Customer");
     const machineModel = safeName(document.getElementById("mcType").value, "Machine_Model");
     const serialNumber = safeName(document.getElementById("mcNo").value, "Serial_No");
     const reportNum = getReportNumber();
     
-    // Output naming layout format matches requirements structure exactly
     return `${customer}_${machineModel}_${serialNumber}_${reportNum}`;
 }
 
