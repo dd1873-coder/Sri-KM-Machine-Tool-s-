@@ -330,7 +330,7 @@ button{
                 <thead>
                     <tr>
                         <th style="width:80px">SL NO</th>
-                        <th>MATERIAL NAME / TYPE NEW</th>
+                        <th>MATERIAL NAME</th>
                         <th style="width:180px">QTY</th>
                         <th class="delete-col" style="width:90px">DELETE</th>
                     </tr>
@@ -759,7 +759,7 @@ async function downloadPDF(){
 
     pdf.autoTable({
         startY: pdf.lastAutoTable.finalY + 8,
-        head: [["SL NO", "MATERIAL NAME / DESCRIPTION", "QTY"]],
+        head: [["SL NO", "MATERIAL NAME", "QTY"]],
         body: tableBodyData,
         theme: "grid",
         headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: "bold", halign: "center" },
