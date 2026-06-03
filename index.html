@@ -670,7 +670,7 @@ function validateInputFormFields() {
     if (!customer) missingFields.push("CUSTOMER NAME");
     if (!mcType) missingFields.push("MACHINE TYPE (MC TYPE)");
     if (!mcNo) missingFields.push("MACHINE SERIAL NUMBER (MC NO)");
-    if (!engineer) missingFields.push("ENGINEER NAME);
+    if (!engineer) missingFields.push("ENGINEER");
 
     if (missingFields.length > 0) {
         alert("ERROR: CANNOT DOWNLOAD FILE!\n\nPlease fill out the following required entries:\n❌ " + missingFields.join("\n❌ "));
@@ -747,7 +747,7 @@ async function downloadPDF(){
         body: [
             ["Customer", customer, "Date", date],
             ["Machine Type", mcType, "Serial No", mcNo],
-            ["List Type", listType, "Engineer Name", engineer]
+            ["List Type", listType, "Engineer", engineer]
         ],
         willDrawCell: function(data) {
             data.doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
