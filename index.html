@@ -670,7 +670,7 @@ function validateInputFormFields() {
     if (!customer) missingFields.push("CUSTOMER NAME");
     if (!mcType) missingFields.push("MACHINE TYPE (MC TYPE)");
     if (!mcNo) missingFields.push("MACHINE SERIAL NUMBER (MC NO)");
-    if (!engineer) missingFields.push("ENGINEER);
+    if (!engineer) missingFields.push("ENGINEER NAME);
 
     if (missingFields.length > 0) {
         alert("ERROR: CANNOT DOWNLOAD FILE!\n\nPlease fill out the following required entries:\n❌ " + missingFields.join("\n❌ "));
